@@ -45,17 +45,21 @@ lualine.setup {
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_b = {'branch', 'diff'},
     lualine_c = {
         {'filename', path=1},
     },
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {
-        -- note: Certain colorschemes do not specify the bg color for the highlight group I want to
-        -- use, this leads to the separator < not showing, so I just set the fg color instead.
-        {trailing_whitespace, color={fg=get_fg_color('DiagnosticError')}},
-        {mixed_indent, color={fg=get_fg_color('WarningMsg')}},
+    lualine_x = {
+      'diagnostics',
+      'encoding',
+      'fileformat',
+      'filetype',
+      -- note: Certain colorschemes do not specify the bg color for the highlight group I want to
+      -- use, this leads to the separator < not showing, so I just set the fg color instead.
+      {trailing_whitespace, color={fg=get_fg_color('DiagnosticError')}},
+      {mixed_indent, color={fg=get_fg_color('DiagnosticError')}},
     },
+    lualine_y = {},
     lualine_z = {'location'}
   },
   tabline = {},
@@ -74,4 +78,4 @@ vim.api.nvim_set_keymap('n', 's', "<cmd>lua require'hop'.hint_char1({ current_li
 vim.api.nvim_set_keymap('o', '<leader>s', "<cmd>lua require'hop'.hint_char1({ current_line_only = false, inclusive_jump = true })<cr>", {})
 
 -- Also triggers autocmds from init.vim
-vim_cmd('colorscheme NeoSolarized')
+vim_cmd('colorscheme solarized')

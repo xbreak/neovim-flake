@@ -50,7 +50,7 @@
     robotframework-vim
 
     # Themes/visualization
-    NeoSolarized
+    nvim-solarized-lua
     nord-vim
     nvim-web-devicons
     gruvbox-nvim

@@ -52,7 +52,7 @@
       buildPlug = name:
         top.vimUtils.buildVimPluginFrom2Nix {
           pname = name;
-          version = "master";
+          version = "flake";
           src = builtins.getAttr name inputs;
         };
     in {

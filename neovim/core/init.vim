@@ -110,7 +110,7 @@ autocmd ColorScheme *
       \ highlight! link HopNextKey2 DiffChange
 
 " Fix up bat themes based on current colorscheme
-autocmd Colorscheme NeoSolarized
+autocmd Colorscheme solarized
       \ let $BAT_THEME = (&background == 'dark' ? 'Solarized (dark)' : 'Solarized (light)')
 
 autocmd Colorscheme nord
