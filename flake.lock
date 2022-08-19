@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "fzf-lua": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1660828830,
+        "narHash": "sha256-gjtiF2I9DY1wWEfaxWxhPrDJgiruoHARf/EtI/wbYtU=",
+        "owner": "ibhagwan",
+        "repo": "fzf-lua",
+        "rev": "054c312b1cc327be68045ffc4926133a60ff9b82",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ibhagwan",
+        "repo": "fzf-lua",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1660661643,
@@ -30,10 +46,79 @@
         "type": "indirect"
       }
     },
+    "nvim-tree-lua": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1660537822,
+        "narHash": "sha256-vrU2ZjTfXHV0lgDhLhRJAEjBwzDu/VsYjdyAGx2hjOc=",
+        "owner": "kyazdani42",
+        "repo": "nvim-tree.lua",
+        "rev": "09a51266bca28dd87febd63c66bdbd74f7764a63",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kyazdani42",
+        "repo": "nvim-tree.lua",
+        "type": "github"
+      }
+    },
+    "robotframework-vim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1557313274,
+        "narHash": "sha256-hO7O6/U68N7leow/mZtXINZq4vUAFXw7g6LPW9XgzEE=",
+        "owner": "rasjani",
+        "repo": "robotframework-vim",
+        "rev": "bc2156daf6e35dfa5b11001ab2acf0df286b1e6f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rasjani",
+        "repo": "robotframework-vim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
+        "fzf-lua": "fzf-lua",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "nvim-tree-lua": "nvim-tree-lua",
+        "robotframework-vim": "robotframework-vim",
+        "vim-fswitch": "vim-fswitch",
+        "vim-rst": "vim-rst"
+      }
+    },
+    "vim-fswitch": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1510327990,
+        "narHash": "sha256-LMNptjApgqBd7RMyKEWG/bQ2ahtglKr5Rf3LuDge044=",
+        "owner": "derekwyatt",
+        "repo": "vim-fswitch",
+        "rev": "94acdd8bc92458d3bf7e6557df8d93b533564491",
+        "type": "github"
+      },
+      "original": {
+        "owner": "derekwyatt",
+        "repo": "vim-fswitch",
+        "type": "github"
+      }
+    },
+    "vim-rst": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1660316074,
+        "narHash": "sha256-9LBbDcP5IBgVHACJnqZpOs/tv1aSNZRHKj/TjnciiHY=",
+        "owner": "habamax",
+        "repo": "vim-rst",
+        "rev": "983c2c9c44aa74712d1457332bca38b492f1cc4e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "habamax",
+        "repo": "vim-rst",
+        "type": "github"
       }
     }
   },
