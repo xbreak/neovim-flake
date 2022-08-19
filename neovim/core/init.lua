@@ -42,6 +42,8 @@ lualine.setup {
     section_separators = { left = '', right = ''},
     disabled_filetypes = {'NvimTree'},
     always_divide_middle = true,
+    -- Enable only for modifiable buffers
+    cond = function() return  vim.bo.modifiable end,
   },
   sections = {
     lualine_a = {'mode'},
