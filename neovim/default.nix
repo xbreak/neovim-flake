@@ -132,6 +132,7 @@
               p.tree-sitter-rst
             ]))
             playground
+            nvim-treesitter-context
 
             trouble-nvim
             lspkind-nvim
