@@ -50,7 +50,7 @@ set termguicolors                                 " Bypass fixed terminal colors
 " FZF
 " Add utilities from nix to path
 " Themes are set based on colorscheme below using autocmds
-let $PATH .= ':@bat@/bin:@ripgrep@/bin:@black@/bin'
+let $PATH = '@bat@/bin:@ripgrep@/bin:@black@/bin:@fzf@/bin:' .. $PATH
 
 " Follow symbolic links and prune dot directories
 let $FZF_DEFAULT_COMMAND='find .  -type d -path \*/\.* -prune -o -not -name .\*  -follow -type f -print'
