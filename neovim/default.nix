@@ -54,6 +54,23 @@
     nord-vim
     nvim-web-devicons
     gruvbox-nvim
+
+    # tree-sitter
+    (nvim-treesitter.withPlugins (p: [
+      p.tree-sitter-c
+      p.tree-sitter-cpp
+      p.tree-sitter-python
+      p.tree-sitter-json
+      p.tree-sitter-yaml
+      p.tree-sitter-bash
+      p.tree-sitter-nix
+      p.tree-sitter-latex
+      p.tree-sitter-markdown
+      p.tree-sitter-rst
+    ]))
+    playground
+    nvim-treesitter-context
+
   ];
 
   neovim = pkgs.neovim.override {
@@ -118,22 +135,6 @@
           corePlugins
           ++ [
             nvim-lspconfig
-            # tree-sitter
-            (nvim-treesitter.withPlugins (p: [
-              p.tree-sitter-c
-              p.tree-sitter-cpp
-              p.tree-sitter-python
-              p.tree-sitter-json
-              p.tree-sitter-yaml
-              p.tree-sitter-bash
-              p.tree-sitter-nix
-              p.tree-sitter-latex
-              p.tree-sitter-markdown
-              p.tree-sitter-rst
-            ]))
-            playground
-            nvim-treesitter-context
-
             trouble-nvim
             lspkind-nvim
             luasnip
