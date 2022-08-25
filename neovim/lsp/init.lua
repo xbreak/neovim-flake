@@ -1,6 +1,5 @@
 local cmp = require("cmp")
 local lspconfig = require("lspconfig")
-local luasnip = require("luasnip")
 
 local ok, lspkind = pcall(require, "lspkind")
 if not ok then
@@ -10,6 +9,17 @@ end
 local capabilities = require("cmp_nvim_lsp").update_capabilities(
   vim.lsp.protocol.make_client_capabilities()
 )
+
+-- Accepts a table of paths that are filtered based on if they exist
+local function filter_existing_dirs(dirs)
+  local filtered = {}
+  for _, d in ipairs(dirs) do
+    if vim.fn.isdirectory(vim.fn.expand(d)) ~= 0 then
+      table.insert(filtered, d)
+    end
+  end
+  return filtered
+end
 
 local function on_attach(_, buf)
   local map = {
@@ -67,7 +77,46 @@ local function on_attach(_, buf)
   -- }, buf)
 end
 
+-- Luasnip
+local luasnip = require("luasnip")
+luasnip.config.set_config {
+  -- Keep last snippet around -> can jump back in.
+  history = true;
+}
 
+-- Note: Luasnip doesn't handle non-exiting directories
+require("luasnip.loaders.from_lua").lazy_load({
+  paths = filter_existing_dirs({"~/.config/luasnip", "~/.luasnip"})
+})
+
+-- Navigate forward/expand snippet
+vim.keymap.set({ "i", "s" }, "<c-k>", function()
+  if luasnip.expand_or_jumpable() then
+    luasnip.expand_or_jump()
+  end
+end, {silent = true })
+
+-- Navigate backward
+vim.keymap.set({ "i", "s" }, "<c-j>", function()
+  if luasnip.jumpable(-1) then
+    luasnip.jump(-1)
+  end
+end, { silent = true })
+
+-- Select an option
+vim.keymap.set("i", "<c-l>", function()
+  -- If there's no active choice don't do anything
+  if not require"luasnip.session".active_choice_node then
+    return
+  end
+  if luasnip.choice_active() then
+    luasnip.change_choice(1)
+  end
+end)
+vim.keymap.set("i", "<c-u>", require "luasnip.extras.select_choice")
+
+
+-- Cmp
 cmp.setup({
   confirmation = { default_behavior = cmp.ConfirmBehavior.Replace },
   formatting = {
@@ -124,7 +173,7 @@ cmp.setup({
       with_text = true,
       menu = {
         buffer = "[buf]",
-        nvim_lsp = "[LSP]",
+        nvim_lsp = "[lsp]",
         nvim_lua = "[api]",
         path = "[path]",
         luasnip = "[snip]",

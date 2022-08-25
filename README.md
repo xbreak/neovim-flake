@@ -87,3 +87,59 @@ It also comes bundled with
 - ripgrep
 - bat
 
+## Luasnip
+
+Snippets are lazily loaded automatically based on filetype `<ft>` from `~/.config/luasnip/<ft>.lua`
+or `~/.config/luasnip/<ft>/*.lua` and `~/.luasnip/<ft>.lua` or `~/.luasnip/<ft>/*.lua`.
+
+Globals injected by luasnip (as defined in
+https://github.com/L3MON4D3/LuaSnip/blob/69cb81cf7490666890545fef905d31a414edc15b/lua/luasnip/config.lua#L82-L104):
+
+```lua
+s = require("luasnip.nodes.snippet").S,
+sn = require("luasnip.nodes.snippet").SN,
+t = require("luasnip.nodes.textNode").T,
+f = require("luasnip.nodes.functionNode").F,
+i = require("luasnip.nodes.insertNode").I,
+c = require("luasnip.nodes.choiceNode").C,
+d = require("luasnip.nodes.dynamicNode").D,
+r = require("luasnip.nodes.restoreNode").R,
+l = require("luasnip.extras").lambda,
+rep = require("luasnip.extras").rep,
+p = require("luasnip.extras").partial,
+m = require("luasnip.extras").match,
+n = require("luasnip.extras").nonempty,
+dl = require("luasnip.extras").dynamic_lambda,
+fmt = require("luasnip.extras.fmt").fmt,
+fmta = require("luasnip.extras.fmt").fmta,
+conds = require("luasnip.extras.expand_conditions"),
+types = require("luasnip.util.types"),
+events = require("luasnip.util.events"),
+parse = require("luasnip.util.parser").parse_snippet,
+ai = require("luasnip.nodes.absolute_indexer"),
+```
+
+Each snippet file must return one or two lists of snippets (either may be `nil`). First list are
+regular snippets whereas the second are autosnippets.
+
+See also https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#snippets.
+
+Example snippet (without auto-snippets):
+
+```lua
+return {
+  -- LSP-snippet example:
+  parse("lspsnippet", "$1 snippet $2"),
+
+  -- luasnip example:
+  -- note: index 0 is always the last one
+  s("luasnip", {
+    t({"Text node 1: "}),
+    i(1),
+    t({"Text node 2: "}),
+    i(2),
+    t({"Last text node: "}),
+    i(0),
+  }),
+}
+```
