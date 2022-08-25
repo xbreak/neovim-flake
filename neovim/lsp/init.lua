@@ -2,6 +2,10 @@ local cmp = require("cmp")
 local lspconfig = require("lspconfig")
 local luasnip = require("luasnip")
 
+local ok, lspkind = pcall(require, "lspkind")
+if not ok then
+  return
+end
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(
   vim.lsp.protocol.make_client_capabilities()
@@ -10,8 +14,8 @@ local capabilities = require("cmp_nvim_lsp").update_capabilities(
 local function on_attach(_, buf)
   local map = {
     K = "lua vim.lsp.buf.hover()",
-    ["<space>d"] = "Trouble document_diagnostics",
-    ["<space>e"] = "Trouble workspace_diagnostics",
+    ["<space>dd"] = "Trouble document_diagnostics",
+    ["<space>dw"] = "Trouble workspace_diagnostics",
     ["="] = "lua vim.lsp.buf.formatting()",
     ["<space>r"] = "Trouble lsp_references",
     ["[d"] = "lua vim.lsp.diagnostic.goto_prev()",
@@ -50,16 +54,17 @@ local function on_attach(_, buf)
   )
   -- Show all diagnostics on current line in floating window
   vim.api.nvim_set_keymap(
-    'n', '<Leader>do', '<cmd>lua vim.diagnostic.open_float()<CR>',
+    'n', '<Leader>df', '<cmd>lua vim.diagnostic.open_float()<CR>',
     { noremap = true, silent = true }
   )
-  
+
+  -- Disabled while evaluating using cmp-nvim-lsp-signature-help only.
   -- lsp_signature
-  require "lsp_signature".on_attach({
-    handler_opts = {
-      border = "none"
-    }
-  }, buf)
+  -- require "lsp_signature".on_attach({
+  --   handler_opts = {
+  --     border = "none"
+  --   }
+  -- }, buf)
 end
 
 
@@ -73,26 +78,34 @@ cmp.setup({
       cmp.close()
       fallback()
     end,
-    ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), {'i','c'}),
-    ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), {'i','c'}),
+
+    ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+    ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+    ["<C-e>"] = cmp.mapping.abort(),
     ["<cr>"] = cmp.mapping.confirm(),
-    ["<m-cr>"] = cmp.mapping.confirm({ select = true }),
-    ["<S-Tab>"] = cmp.mapping({
-      i = function(fallback)
-        if not cmp.select_prev_item() and not luasnip.jump(-1) then
-          fallback()
+    ["<c-y>"] = cmp.mapping(
+      cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Insert,
+        select = true,
+      },
+      { "i", "c" }
+    ),
+    ["<c-space>"] = cmp.mapping {
+      i = cmp.mapping.complete(),
+      c = function(
+        _ --[[fallback]]
+      )
+        if cmp.visible() then
+          if not cmp.confirm { select = true } then
+            return
+          end
+        else
+          cmp.complete()
         end
       end,
-      c = cmp.mapping.select_prev_item(),
-    }),
-    ["<Tab>"] = cmp.mapping({
-      i = function(fallback)
-        if not cmp.select_next_item() and not luasnip.jump(1) then
-          fallback()
-        end
-      end,
-      c = cmp.mapping.select_next_item(),
-    }),
+    },
   },
   snippet = {
     expand = function(args)
@@ -102,8 +115,25 @@ cmp.setup({
   sources = {
     { name = "nvim_lsp" },
     { name = "path" },
-    -- { name = "luasnip" },
     { name = "buffer", keyword_length = 3 },
+    { name = "luasnip" },
+    { name = 'nvim_lsp_signature_help' },
+  },
+  formatting = {
+    format = lspkind.cmp_format {
+      with_text = true,
+      menu = {
+        buffer = "[buf]",
+        nvim_lsp = "[LSP]",
+        nvim_lua = "[api]",
+        path = "[path]",
+        luasnip = "[snip]",
+      },
+    },
+  },
+  experimental = {
+    native_menu = false,
+    ghost_text = true,
   },
 })
 
@@ -152,7 +182,8 @@ lspconfig.clangd.setup({
     "--background-index",
     "--log=info",
     "--resource-dir=@clang@/resource-root",
-    "--query-driver=**/g++,**/gcc"
+    "--query-driver=**/g++,**/gcc",
+    "--all-scopes-completion",
   },
   on_attach = on_attach,
 })

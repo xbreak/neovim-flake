@@ -139,7 +139,8 @@
             trouble-nvim
             lspkind-nvim
             luasnip
-            lsp_signature-nvim
+            # Overlaps with cmp-nvim-lsp-signature-help which is being evaluated.
+            # lsp_signature-nvim
 
             # nvim-cmp and completion sources
             nvim-cmp
@@ -147,6 +148,7 @@
             cmp-buffer
             cmp-nvim-lsp
             cmp-nvim-lsp-document-symbol
+            cmp-nvim-lsp-signature-help
             cmp-nvim-lua
             cmp-path
             cmp_luasnip
