@@ -69,12 +69,29 @@ lualine.setup {
 }
 
 -- nvim-tree
-require'nvim-tree'.setup {}
+require'nvim-tree'.setup {
+  renderer = {
+    icons = {
+      glyphs = {
+        git = {
+          unstaged = "ﯽ", -- ",
+          staged = "",
+          unmerged = "",
+          renamed = "➜",
+          untracked = "ﬤ",
+          deleted = "ﮁ",
+        }
+      }
+    }
+  }
+}
 
 -- easy-motion that doesn't modify buffer
 require'hop'.setup {
     case_insensitive=false,
 }
+
+-- hop
 vim.api.nvim_set_keymap('n', 's', "<cmd>lua require'hop'.hint_char1({ current_line_only = false, inclusive_jump = false })<cr>", {})
 -- Vim surround occupies "s" so we use <leader>s
 vim.api.nvim_set_keymap('o', '<leader>s', "<cmd>lua require'hop'.hint_char1({ current_line_only = false, inclusive_jump = true })<cr>", {})
