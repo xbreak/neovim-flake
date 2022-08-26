@@ -47,18 +47,10 @@ tmap <Leader>t <c-w>:term ++close<cr>
 " Visualization options
 set termguicolors                                 " Bypass fixed terminal colors to allow 24bit
 
-" FZF
 " Add utilities from nix to path
 " Themes are set based on colorscheme below using autocmds
 let $PATH = '@bat@/bin:@ripgrep@/bin:@black@/bin:@fzf@/bin:' .. $PATH
 
-" Follow symbolic links and prune dot directories
-let $FZF_DEFAULT_COMMAND='find .  -type d -path \*/\.* -prune -o -not -name .\*  -follow -type f -print'
-" Fzf window
-let g:fzf_layout = {'up':'~90%', 'window': { 'width': 0.8, 'height': 0.8,'yoffset':0.5,'xoffset': 0.5, 'highlight': 'Todo', 'border': 'sharp' } }
-nnoremap <C-p> :Buffers<CR>
-nnoremap <C-u> :Files<CR>
-nnoremap <C-o> :GitFiles<CR>
 " FSWITCH
 let g:fsnonewfiles = 'true'
 nmap T :FSHere<cr>

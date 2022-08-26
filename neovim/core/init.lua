@@ -34,6 +34,29 @@ local function get_fg_color(group)
     return vim.fn.synIDattr(vim.fn.hlID(group), "fg", "gui" )
 end
 
+-- fzf-lua setup
+local fzf = require'fzf-lua'
+fzf.setup {
+  winopts = {
+    preview = {
+      -- default preview delay of 100ms feels a tad laggy
+      delay = 10,
+    },
+  },
+  files = {
+   -- Follow symbolic links and prune dot directories
+    find_opts = [[-type d -path \*/\.* -prune -o -not -name .\*  -follow -type f -print]],
+  },
+}
+-- fzf-lua mappings
+vim.keymap.set("n", "<c-p>", fzf.buffers, {})
+vim.keymap.set("n", "<c-u>", fzf.files, {})
+vim.keymap.set("n", "<c-o>", fzf.git_files, {})
+vim.keymap.set("n", "<c-y>", fzf.blines, {})
+vim.keymap.set("n", "<leader>gg", fzf.live_grep_glob, {})
+
+
+-- lualine
 lualine.setup {
   options = {
     icons_enabled = true,

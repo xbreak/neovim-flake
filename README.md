@@ -23,7 +23,7 @@ $ nix run github:xbreak/neovim-flake#neovim-lsp
 
 Navigation
 
-- fzf-vim
+- fzf-lua
 - nvim-tree-lua
 - hop-nvim
 - vim-fswitch
@@ -78,7 +78,7 @@ Same as core but in addition have the following plugins:
 - cmp-path
 - cmp_luasnip
 
-It also comes bundled with 
+It also comes bundled with:
 
 - clang (clangd, clang-format)
 - python-lsp-server (with pylint)

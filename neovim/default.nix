@@ -28,7 +28,7 @@
     dotplug
 
     # Navigation
-    fzf-vim
+    fzf-lua
     nvim-tree-lua
     lualine-nvim
     hop-nvim
