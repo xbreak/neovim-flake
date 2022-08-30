@@ -4,7 +4,7 @@ let g:no_home_init=1
 " Leader mapping
 let mapleader = " "                               " set leader to <SPACE>
 nnoremap <SPACE> <Nop>
-"tnoremap <C-[> <C-\><C-N>                         " a more convenient escape from terminal
+tnoremap <esc> <C-\><C-n>                         " a more convenient escape from terminal
 
 " Default options
 set sw=4
