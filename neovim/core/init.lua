@@ -191,5 +191,18 @@ require'treesitter-context'.setup{
     separator = nil, -- Separator between context and content. Should be a single character string, like '-'.
 }
 
+-- Toggle term
+require'toggleterm'.setup {
+  -- Disable shading as this results in using white background with solarized light
+  shade_terminals = false,
+  size = function(term)
+    if term.direction == "horizontal" then
+      return 30
+    elseif term.direction == "vertical" then
+      return vim.o.columns * 0.4
+    end
+  end,
+}
+
 -- Also triggers autocmds from init.vim
 vim_cmd('colorscheme solarized')

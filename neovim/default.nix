@@ -34,6 +34,9 @@
     hop-nvim
     vim-fswitch
 
+    # Terminal support
+    toggleterm-nvim
+
     # Text editing
     vim-repeat
     vim-surround
