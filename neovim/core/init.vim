@@ -83,8 +83,8 @@ augroup eso_cpp
 augroup END
 
 augroup filetypedetect
-    autocmd BufNew,BufNewFile,BufRead wscript setlocal filetype=python
-    autocmd BufNew,BufNewFile,BufRead *.resource setlocal filetype=robot
+    autocmd BufEnter wscript setlocal filetype=python
+    autocmd BufEnter *.resource setlocal filetype=robot
 augroup END
 
 " Disable numbering in terminals
