@@ -121,7 +121,10 @@ vim.api.nvim_set_keymap('o', '<leader>s', "<cmd>lua require'hop'.hint_char1({ cu
 
 -- Tree-sitter
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {"cpp", "python", "latex", "nix", "yaml", "json", "rst"},     -- one of "all", "language", or a list of languages
+  -- Broken by https://github.com/nvim-treesitter/nvim-treesitter/pull/3250
+  -- see also https://github.com/NixOS/nixpkgs/issues/189838
+  -- one of "all", "language", or a list of languages
+  -- ensure_installed = {"cpp", "python", "latex", "nix", "yaml", "json", "rst"},
   highlight = {
     enable = true,              -- false will disable the whole extension
   },
