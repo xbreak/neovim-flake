@@ -1,3 +1,11 @@
+-- Global Options
+
+-- Disabled for now as it's a bit too experimental
+-- vim.go.cmdheight = 0
+
+
+-- Plugin configuration
+
 local vim_cmd = vim.api.nvim_command
 local lualine = require('lualine')
 
@@ -71,9 +79,7 @@ lualine.setup {
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch', 'diff'},
-    lualine_c = {
-        {'filename', path=1},
-    },
+    lualine_c = {},
     lualine_x = {
       'diagnostics',
       'encoding',
@@ -86,6 +92,28 @@ lualine.setup {
     },
     lualine_y = {},
     lualine_z = {'location'}
+  },
+  winbar = {
+    lualine_a = {
+      {'filetype', icon_only = true},
+      {'filename', path=1}
+    },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  inactive_winbar = {
+    lualine_a = {
+      {'filetype', icon_only = true},
+      {'filename', path=1}
+    },
+    lualine_b = {},
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {}
   },
   tabline = {},
   extensions = {}

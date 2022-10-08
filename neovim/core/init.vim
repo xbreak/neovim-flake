@@ -16,7 +16,7 @@ set splitright
 
 set wildmode=longest:full,full       " Bash-like longest match
 set wildmenu
-set laststatus=2
+set laststatus=3                     " Single global statusline
 set backspace=2                      " Deleting indentations et.c.
 
 set scrolloff=3                                   " keep margin around scrolling
