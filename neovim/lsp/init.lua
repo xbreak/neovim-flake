@@ -7,7 +7,12 @@ if not ok then
 end
 
 local capabilities = require("cmp_nvim_lsp").update_capabilities(
-  vim.lsp.protocol.make_client_capabilities()
+vim.lsp.protocol.make_client_capabilities(),
+    {
+      -- Disable snippet support to avoid getting "helpful" snippets from clangd
+      -- (doesn't seem to work as cmp still presents [lsp] sourced snippets)
+      snippetSupport = false
+    }
 )
 
 -- Accepts a table of paths that are filtered based on if they exist
