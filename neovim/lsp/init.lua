@@ -69,7 +69,7 @@ local function on_attach(_, buf)
   )
   -- Show all diagnostics on current line in floating window
   vim.api.nvim_set_keymap(
-    'n', '<Leader>df', '<cmd>lua vim.diagnostic.open_float()<CR>',
+    "n", "<Leader>df", "<cmd>lua vim.diagnostic.open_float()<CR>",
     { noremap = true, silent = true }
   )
 
@@ -91,7 +91,7 @@ luasnip.config.set_config {
 
 -- Note: Luasnip doesn't handle non-exiting directories
 require("luasnip.loaders.from_lua").lazy_load({
-  paths = filter_existing_dirs({"~/.config/luasnip", "~/.luasnip"})
+  paths = filter_existing_dirs({ "~/.config/luasnip", "~/.luasnip" })
 })
 
 -- Navigate forward/expand snippet
@@ -99,7 +99,7 @@ vim.keymap.set({ "i", "s" }, "<c-k>", function()
   if luasnip.expand_or_jumpable() then
     luasnip.expand_or_jump()
   end
-end, {silent = true })
+end, { silent = true })
 
 -- Navigate backward
 vim.keymap.set({ "i", "s" }, "<c-j>", function()
@@ -111,7 +111,7 @@ end, { silent = true })
 -- Select an option
 vim.keymap.set("i", "<c-l>", function()
   -- If there's no active choice don't do anything
-  if not require"luasnip.session".active_choice_node then
+  if not require "luasnip.session".active_choice_node then
     return
   end
   if luasnip.choice_active() then
@@ -211,9 +211,9 @@ lspconfig.pylsp.setup({
   capabilities = capabilities,
   cmd = { "@python_lsp_server@/bin/pylsp" },
   on_attach = on_attach,
-    settings = {
+  settings = {
     pylsp = {
-      plugins =  {
+      plugins = {
         pycodestyle = {
           maxLineLength = 100,
         },
@@ -241,6 +241,45 @@ lspconfig.clangd.setup({
   },
   on_attach = on_attach,
 })
+
+-- lua lsp
+require "lspconfig".sumneko_lua.setup {
+  cmd = { "@sumneko_lua_language_server@/bin/lua-language-server" },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    Lua = {
+      runtime = {
+        -- Tell the language server which version of Lua you're using
+        -- (most likely LuaJIT in the case of Neovim)
+        version = "LuaJIT",
+      },
+      format = {
+        enable = true,
+        defaultConfig = {
+          -- c.f. https://github.com/CppCXY/EmmyLuaCodeStyle/blob/master/lua.template.editorconfig
+          indent_style = "space",
+          indent_size = "2",
+          quote_style = "double",
+          max_line_length = "120",
+          align_call_args = "true",
+        },
+      },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { "vim" },
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+      },
+      -- Do not send telemetry data containing a randomized but unique identifier
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
 
 require("trouble").setup()
 

@@ -122,6 +122,7 @@
               (pkgs)
               shellcheck
               yaml-language-server
+              sumneko-lua-language-server
               ;
             inherit
               (pkgs.llvmPackages_latest)
