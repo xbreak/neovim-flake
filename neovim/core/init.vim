@@ -4,7 +4,7 @@ let g:no_home_init=1
 " Leader mapping
 let mapleader = " "                               " set leader to <SPACE>
 nnoremap <SPACE> <Nop>
-tnoremap <esc> <C-\><C-n>                         " a more convenient escape from terminal
+tnoremap <C-]> <C-\><C-n>                         " a more convenient escape from terminal
 
 " Default options
 set sw=4
@@ -39,10 +39,6 @@ au TextYankPost * silent! lua vim.highlight.on_yank()
 nnoremap <silent><C-n> :NvimTreeToggle<CR>
 " Find current file with NERDTree
 nnoremap <silent><leader>ntf :NvimTreeFindFile<cr>
-
-" vim-powered terminal in split window
-map <Leader>t :term ++close<cr>
-tmap <Leader>t <c-w>:term ++close<cr>
 
 " Visualization options
 set termguicolors                                 " Bypass fixed terminal colors to allow 24bit
@@ -91,8 +87,11 @@ augroup END
 autocmd TermOpen * setlocal nonumber norelativenumber
 
 " Highlight line in the gutter but not the full line
+" Update TermCursor to use solarized green for cursor in "insert" mode
 autocmd ColorScheme *
       \ highlight CursorLineNr cterm=reverse gui=reverse |
+      \ highlight clear TermCursor |
+      \ highlight! TermCursor guibg=#859900 |
       \ highlight clear CursorLine
 
 " Fix up difficult to see hop motion indicators
