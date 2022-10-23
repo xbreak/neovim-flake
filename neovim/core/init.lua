@@ -1,6 +1,27 @@
+-- Global Options
+vim.o.showtabline = 0  -- Never show tabline
+
+-- Disabled for now as it's a bit too experimental
+-- vim.go.cmdheight = 0
+
+
+-- Plugin configuration
+
 local vim_cmd = vim.api.nvim_command
 local lualine = require('lualine')
 
+-- Toggle window maximization
+vim.keymap.set("n", "<c-w>o", [[:ToggleOnly<cr>]], { silent = true })
+
+-- Toggle normal/terminal mode with <C-]> for terminal buffers
+function _G.set_terminal_keymaps()
+  local opts = {buffer = 0, silent = true}
+  vim.keymap.set('t', '<C-]>', [[<C-\><C-n>]], opts)
+  vim.keymap.set('n', '<C-]>', [[:startinsert<cr>]], opts)
+end
+vim.cmd([[autocmd! TermOpen term://* lua set_terminal_keymaps()]])
+
+-- Utility functions
 local function mixed_indent()
   local space_pat = [[\v^ +]]
   local tab_pat = [[\v^\t+]]
@@ -35,61 +56,108 @@ local function get_fg_color(group)
 end
 
 -- fzf-lua setup
-local fzf = require'fzf-lua'
-fzf.setup {
-  winopts = {
-    preview = {
-      -- default preview delay of 100ms feels a tad laggy
-      delay = 10,
+do
+  local fzf = require'fzf-lua'
+  fzf.setup {
+    winopts = {
+      preview = {
+        -- default preview delay of 100ms feels a tad laggy
+        delay = 10,
+      },
     },
-  },
-  files = {
-   -- Follow symbolic links and prune dot directories
-    find_opts = [[-type d -path \*/\.* -prune -o -not -name .\*  -follow -type f -print]],
-  },
-}
--- fzf-lua mappings
-vim.keymap.set("n", "<c-p>", fzf.buffers, {})
-vim.keymap.set("n", "<c-u>", fzf.files, {})
-vim.keymap.set("n", "<c-o>", fzf.git_files, {})
-vim.keymap.set("n", "<c-y>", fzf.blines, {})
-vim.keymap.set("n", "<leader>gg", fzf.live_grep_glob, {})
-
+    files = {
+     -- Follow symbolic links and prune dot directories
+      find_opts = [[-type d -path \*/\.* -prune -o -not -name .\*  -follow -type f -print]],
+    },
+  }
+  -- fzf-lua mappings
+  vim.keymap.set("n", "<c-p>", fzf.buffers, {})
+  vim.keymap.set("n", "<c-u>", fzf.files, {})
+  vim.keymap.set("n", "<c-o>", fzf.git_files, {})
+  vim.keymap.set("n", "<c-y>", fzf.blines, {})
+  vim.keymap.set("n", "<leader>gg", fzf.live_grep_glob, {})
+end
 
 -- lualine
-lualine.setup {
-  options = {
-    icons_enabled = true,
-    theme = 'auto',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {'NvimTree'},
-    always_divide_middle = true,
-    -- Enable only for modifiable buffers
-    cond = function() return  vim.bo.modifiable end,
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff'},
-    lualine_c = {
-        {'filename', path=1},
+do
+  local lualine_toggleterm = {
+    filetypes = { "toggleterm" },
+    winbar = { },
+    sections = {
+      lualine_a = {
+        'mode',
+        function()
+          return 'ToggleTerm #' .. vim.b.toggle_number
+        end
+      },
     },
-    lualine_x = {
-      'diagnostics',
-      'encoding',
-      'fileformat',
-      'filetype',
-      -- note: Certain colorschemes do not specify the bg color for the highlight group I want to
-      -- use, this leads to the separator < not showing, so I just set the fg color instead.
-      {trailing_whitespace, color={fg=get_fg_color('DiagnosticError')}},
-      {mixed_indent, color={fg=get_fg_color('DiagnosticError')}},
+  }
+
+  lualine.setup {
+    options = {
+      icons_enabled = true,
+      -- TODO: Patch solarized to make TERMINAL mode prominent
+      --       this needs to take colorscheme switching into account though.
+      --       see https://github.com/nvim-lualine/lualine.nvim#customizing-themes
+      theme = 'auto',
+      component_separators = { left = '', right = ''},
+      section_separators = { left = '', right = ''},
+      disabled_filetypes = {'NvimTree'},
+      always_divide_middle = true,
+      -- Enable only for modifiable buffers
+      cond = function() return vim.bo.modifiable or vim.bo.filetype == "toggleterm" end,
     },
-    lualine_y = {},
-    lualine_z = {'location'}
-  },
-  tabline = {},
-  extensions = {}
-}
+    extensions = { lualine_toggleterm },
+    sections = {
+      lualine_a = {'mode'},
+      lualine_b = {'branch', 'diff'},
+      lualine_c = {},
+      lualine_x = {
+        'diagnostics',
+        'encoding',
+        'fileformat',
+        'filetype',
+        -- note: Certain colorschemes do not specify the bg color for the highlight group I want to
+        -- use, this leads to the separator < not showing, so I just set the fg color instead.
+        {trailing_whitespace, color={fg=get_fg_color('DiagnosticError')}},
+        {mixed_indent, color={fg=get_fg_color('DiagnosticError')}},
+      },
+      lualine_y = {},
+      lualine_z = {'location'}
+    },
+    winbar = {
+      lualine_a = {
+        {'filetype', icon_only = true},
+        {'filename', path=1}
+      },
+      lualine_b = {},
+      lualine_c = {},
+      lualine_x = {},
+      lualine_y = {},
+      lualine_z = {
+        function()
+          -- Indicate if window is maximized via ToggleOnly
+          if vim.b.maximized_window_id then
+            return "Maximized"
+          end
+          return ""
+        end
+      }
+    },
+    inactive_winbar = {
+      lualine_a = {
+        {'filetype', icon_only = true},
+        {'filename', path=1}
+      },
+      lualine_b = {},
+      lualine_c = {},
+      lualine_x = {},
+      lualine_y = {},
+      lualine_z = {}
+    },
+    tabline = {},
+  }
+end
 
 -- nvim-tree
 require'nvim-tree'.setup {
@@ -121,7 +189,10 @@ vim.api.nvim_set_keymap('o', '<leader>s', "<cmd>lua require'hop'.hint_char1({ cu
 
 -- Tree-sitter
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {"cpp", "python", "latex", "nix", "yaml", "json", "rst"},     -- one of "all", "language", or a list of languages
+  -- Broken by https://github.com/nvim-treesitter/nvim-treesitter/pull/3250
+  -- see also https://github.com/NixOS/nixpkgs/issues/189838
+  -- one of "all", "language", or a list of languages
+  -- ensure_installed = {"cpp", "python", "latex", "nix", "yaml", "json", "rst"},
   highlight = {
     enable = true,              -- false will disable the whole extension
   },
@@ -192,17 +263,73 @@ require'treesitter-context'.setup{
 }
 
 -- Toggle term
-require'toggleterm'.setup {
-  -- Disable shading as this results in using white background with solarized light
-  shade_terminals = false,
-  size = function(term)
-    if term.direction == "horizontal" then
-      return 30
-    elseif term.direction == "vertical" then
-      return vim.o.columns * 0.4
+do
+  local term = require"toggleterm.terminal"
+  -- Local state to support reopen last terminal when no terminal is focused
+  local last_opened_closed = nil
+
+  --- Closes if current window is a toggleterm
+  --- Opens last opened toggleterm otherwise
+  local function toggle()
+    if vim.bo.filetype == "toggleterm" then
+      -- Current buffer is a toggle terminal
+      -- -> close it.
+      for _, t in ipairs(term.get_all()) do
+        if t:is_focused() then
+          t:close()
+          return
+        end
+      end
+    else
+      -- Toggle last terminal
+      -- TODO: reopen in last position?
+      if last_opened_closed then
+        require"toggleterm".toggle(last_opened_closed)
+      else
+        -- If there was no terminal - do nothing for the moment
+        -- as we'd want to take direction into account for example.
+      end
     end
-  end,
-}
+  end
+
+  require"toggleterm".setup {
+    -- Disable shading as this results in using white background with solarized light
+    shade_terminals = false,
+    on_open = function(t)
+      if not t.__xbreak_first then
+        t.__xbreak_first = true
+        -- Set simplified PS1 when first entering terminal
+        -- NOTE: This assumes that it's an interactive shell, so will
+        -- randomly fail otherwise.
+        t:send([[ set +o history; unset PROMPT_COMMAND; export PS1="\w$ "; clear; set -o history]])
+      end
+      last_opened_closed = t.id
+    end,
+    on_close = function(t)
+      last_opened_closed = t.id
+    end,
+    size = function(term)
+      if term.direction == "horizontal" then
+        return 30
+      elseif term.direction == "vertical" then
+        return vim.o.columns * 0.5
+      end
+    end,
+  }
+
+
+  vim.keymap.set("n", "<leader>1", [[:1ToggleTerm direction=float<cr>]], {})
+
+  vim.keymap.set("n", "<leader>2", [[:2ToggleTerm direction=horizontal<cr>]], {})
+  vim.keymap.set("n", "<leader>3", [[:3ToggleTerm direction=horizontal<cr>]], {})
+  vim.keymap.set("n", "<leader>4", [[:4ToggleTerm direction=horizontal<cr>]], {})
+
+  vim.keymap.set("n", "<leader>5", [[:5ToggleTerm direction=vertical<cr>]], {})
+  vim.keymap.set("n", "<leader>6", [[:6ToggleTerm direction=vertical<cr>]], {})
+  vim.keymap.set("n", "<leader>7", [[:7ToggleTerm direction=vertical<cr>]], {})
+  -- Toggle term with ctrl-space
+  vim.keymap.set({"n", "t"}, "<C-space>", toggle, {})
+end
 
 -- Also triggers autocmds from init.vim
 vim_cmd('colorscheme solarized')

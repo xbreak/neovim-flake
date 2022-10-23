@@ -27,6 +27,10 @@
       url = "github:habamax/vim-rst";
       flake = false;
     };
+    nvim-maximize-window-toggle = {
+      url = "github:caenrique/nvim-maximize-window-toggle";
+      flake = false;
+    };
   };
   outputs = {
     self,
@@ -40,6 +44,7 @@
       "robotframework-vim"
       "vim-fswitch"
       "vim-rst"
+      "nvim-maximize-window-toggle"
     ];
     system = "x86_64-linux";
     pkgs = import nixpkgs-unstable {

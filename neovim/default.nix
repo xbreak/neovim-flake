@@ -61,18 +61,30 @@
 
     # tree-sitter
     (nvim-treesitter.withPlugins (p: [
-      p.tree-sitter-c
-      p.tree-sitter-cpp
-      p.tree-sitter-python
-      p.tree-sitter-json
-      p.tree-sitter-yaml
       p.tree-sitter-bash
-      p.tree-sitter-nix
+      p.tree-sitter-c
+      p.tree-sitter-cmake
+      p.tree-sitter-comment
+      p.tree-sitter-cpp
+      p.tree-sitter-css
+      p.tree-sitter-dockerfile
+      p.tree-sitter-html
+      p.tree-sitter-javascript
+      p.tree-sitter-json
       p.tree-sitter-latex
+      p.tree-sitter-lua
+      p.tree-sitter-make
       p.tree-sitter-markdown
+      p.tree-sitter-nix
+      p.tree-sitter-python
+      p.tree-sitter-query
       p.tree-sitter-rst
+      p.tree-sitter-vim
+      p.tree-sitter-yaml
     ]))
     playground
+    # An alternative to this could be nvim-navic, which use winbar and lsp
+    # https://github.com/SmiteshP/nvim-navic
     nvim-treesitter-context
 
   ];
@@ -110,6 +122,7 @@
               (pkgs)
               shellcheck
               yaml-language-server
+              sumneko-lua-language-server
               ;
             inherit
               (pkgs.llvmPackages_latest)
@@ -142,6 +155,7 @@
             trouble-nvim
             lspkind-nvim
             luasnip
+            pkgs.neovimPlugins.nvim-maximize-window-toggle
             # Overlaps with cmp-nvim-lsp-signature-help which is being evaluated.
             # lsp_signature-nvim
 
