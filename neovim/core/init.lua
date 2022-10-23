@@ -1,4 +1,5 @@
 -- Global Options
+vim.o.showtabline = 0  -- Never show tabline
 
 -- Disabled for now as it's a bit too experimental
 -- vim.go.cmdheight = 0
@@ -8,6 +9,10 @@
 
 local vim_cmd = vim.api.nvim_command
 local lualine = require('lualine')
+
+-- Toggle window maximization
+
+vim.keymap.set("n", "<c-w>o", [[:ToggleOnly<cr>]], { silent = true })
 
 local function mixed_indent()
   local space_pat = [[\v^ +]]
@@ -102,7 +107,15 @@ lualine.setup {
     lualine_c = {},
     lualine_x = {},
     lualine_y = {},
-    lualine_z = {}
+    lualine_z = {
+      function()
+        -- Indicate if window is maximized via ToggleOnly
+        if vim.b.maximized_window_id then
+          return "Maximized"
+        end
+        return ""
+      end
+    }
   },
   inactive_winbar = {
     lualine_a = {

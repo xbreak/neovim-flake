@@ -46,6 +46,22 @@
         "type": "indirect"
       }
     },
+    "nvim-maximize-window-toggle": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1587569265,
+        "narHash": "sha256-Y6aVvgJx7ECV5uFN3XVQI0OU3CedMXAu7JZKGA9OKDQ=",
+        "owner": "caenrique",
+        "repo": "nvim-maximize-window-toggle",
+        "rev": "010e5a74ce18765707af8d0c60a79780c59caa13",
+        "type": "github"
+      },
+      "original": {
+        "owner": "caenrique",
+        "repo": "nvim-maximize-window-toggle",
+        "type": "github"
+      }
+    },
     "nvim-tree-lua": {
       "flake": false,
       "locked": {
@@ -83,6 +99,7 @@
         "fzf-lua": "fzf-lua",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "nvim-maximize-window-toggle": "nvim-maximize-window-toggle",
         "nvim-tree-lua": "nvim-tree-lua",
         "robotframework-vim": "robotframework-vim",
         "vim-fswitch": "vim-fswitch",
