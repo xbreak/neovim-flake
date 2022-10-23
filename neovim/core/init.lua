@@ -1,5 +1,6 @@
 -- Global Options
 vim.o.showtabline = 0  -- Never show tabline
+vim.o.timeoutlen = 500  -- Shorter to enter operator-pending mode faster
 
 -- Disabled for now as it's a bit too experimental
 -- vim.go.cmdheight = 0
@@ -178,14 +179,29 @@ require'nvim-tree'.setup {
 }
 
 -- easy-motion that doesn't modify buffer
-require'hop'.setup {
+require"hop".setup {
     case_insensitive=false,
+    current_line_only = false,
+    inclusive_jump = false
 }
 
 -- hop
-vim.api.nvim_set_keymap('n', 's', "<cmd>lua require'hop'.hint_char1({ current_line_only = false, inclusive_jump = false })<cr>", {})
--- Vim surround occupies "s" so we use <leader>s
-vim.api.nvim_set_keymap('o', '<leader>s', "<cmd>lua require'hop'.hint_char1({ current_line_only = false, inclusive_jump = true })<cr>", {})
+vim.keymap.set("n", "s", function()
+    require"hop".hint_char1({})
+  end, {})
+
+vim.keymap.set("n", "gs", function()
+    require"hop".hint_char1({
+      multi_windows = true,
+      })
+  end, {})
+
+-- Operator pending mapping
+vim.keymap.set("o", "s", function()
+    require"hop".hint_char1({
+        inclusive_jump = true
+      })
+  end, {})
 
 -- Tree-sitter
 require'nvim-treesitter.configs'.setup {
