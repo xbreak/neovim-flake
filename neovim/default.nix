@@ -33,6 +33,7 @@
     lualine-nvim
     hop-nvim
     vim-fswitch
+    nvim-maximize-window-toggle
 
     # Terminal support
     toggleterm-nvim
@@ -155,7 +156,6 @@
             trouble-nvim
             lspkind-nvim
             luasnip
-            pkgs.neovimPlugins.nvim-maximize-window-toggle
             # Overlaps with cmp-nvim-lsp-signature-help which is being evaluated.
             # lsp_signature-nvim
 
