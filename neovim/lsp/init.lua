@@ -31,7 +31,7 @@ local function on_attach(_, buf)
     K = "lua vim.lsp.buf.hover()",
     ["<space>dd"] = "Trouble document_diagnostics",
     ["<space>dw"] = "Trouble workspace_diagnostics",
-    ["="] = "lua vim.lsp.buf.formatting()",
+    ["="] = "lua vim.lsp.buf.format( { async = true })",
     ["<space>r"] = "Trouble lsp_references",
     ["[d"] = "lua vim.lsp.diagnostic.goto_prev()",
     ["]d"] = "lua vim.lsp.diagnostic.goto_next()",
@@ -171,7 +171,7 @@ cmp.setup({
     { name = "path" },
     { name = "buffer", keyword_length = 3 },
     { name = "luasnip" },
-    { name = 'nvim_lsp_signature_help' },
+    { name = "nvim_lsp_signature_help" },
   },
   formatting = {
     format = lspkind.cmp_format {
