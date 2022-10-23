@@ -11,6 +11,11 @@ vim.o.timeoutlen = 500  -- Shorter to enter operator-pending mode faster
 local vim_cmd = vim.api.nvim_command
 local lualine = require('lualine')
 
+-- Better bdelete
+-- Shorthand alias `Bd` -> `Bufdelete`
+vim_cmd([[cnoreabbrev Bd Bdelete]])
+vim_cmd([[cnoreabbrev Bd! Bdelete!]])
+
 -- Toggle window maximization
 vim.keymap.set("n", "<c-w>o", [[:ToggleOnly<cr>]], { silent = true })
 

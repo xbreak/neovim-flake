@@ -34,6 +34,7 @@
     hop-nvim
     vim-fswitch
     nvim-maximize-window-toggle
+    bufdelete-nvim
 
     # Terminal support
     toggleterm-nvim
