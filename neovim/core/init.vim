@@ -71,11 +71,11 @@ autocmd FileType rst,markdown setlocal tw=100 sw=4 expandtab
 " C++
 augroup eso_cpp
   au!
-  au BufEnter *.h,*.hpp let b:fswitchdst = 'C,cpp,cc,cxx'
-  au BufEnter *.h,*.ipp,*.hpp let b:fswitchlocs = '../src,reg:|include/.*||,reg:|src/include/.*|test|'
+  au BufEnter *.h,*.hpp let b:fswitchdst = 'cpp,cc,cxx,C'
+  au BufEnter *.h,*.ipp,*.hpp let b:fswitchlocs = './,reg:|include/.*|**|'
 
   au BufEnter *.cpp,*.cxx,*.cc let b:fswitchdst = 'hpp,h,hxx'
-  au BufEnter *.cpp,*.cxx,*.cc let b:fswitchlocs = '.,../include,include/**,../test/**'
+  au BufEnter *.cpp,*.cxx,*.cc let b:fswitchlocs = './,reg:|src|src/include/**|'
 augroup END
 
 augroup filetypedetect
