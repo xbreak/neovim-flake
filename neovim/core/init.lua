@@ -353,5 +353,40 @@ do
   vim.keymap.set({ "n", "t" }, "<C-space>", toggle, {})
 end
 
+function _G.fixup_solarized()
+  local g = vim.g
+  -- black
+	g.terminal_color_0 = "#073642"
+	g.terminal_color_8 = "#002B36"
+
+  -- red
+	g.terminal_color_1 = "#dc322f"
+	g.terminal_color_9 = "#CB4B16"
+
+  -- green
+	g.terminal_color_2 = "#859900"
+	g.terminal_color_10 = "#586E75"
+
+  -- yellow
+	g.terminal_color_3 = "#b58900"
+	g.terminal_color_11 = "#657B83"
+
+  -- blue
+	g.terminal_color_4 = "#268bd2"
+	g.terminal_color_12 = "#839496"
+
+  -- magenta
+	g.terminal_color_5 = "#D33682"
+	g.terminal_color_13 = "#6c71c4"
+
+  -- cyan
+	g.terminal_color_6 = "#2aa198"
+	g.terminal_color_14 = "#93A1A1"
+
+  -- white
+	g.terminal_color_7 = "#EEE8D5"
+	g.terminal_color_15 = "#FDF6E3"
+end
+
 -- Also triggers autocmds from init.vim
 vim_cmd("colorscheme solarized")
