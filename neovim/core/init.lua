@@ -339,16 +339,17 @@ do
     end,
   }
 
+  -- Predefine mappings for standard terminal layouts.
+  -- In a later revision the idea is to allow the visible terminals to be toggled as a group.
+  vim.keymap.set("n", "<leader>1", [[:2ToggleTerm direction=horizontal<cr>]], {})
+  vim.keymap.set("n", "<leader>2", [[:3ToggleTerm direction=horizontal<cr>]], {})
+  vim.keymap.set("n", "<leader>3", [[:4ToggleTerm direction=horizontal<cr>]], {})
 
-  vim.keymap.set("n", "<leader>1", [[:1ToggleTerm direction=float<cr>]], {})
+  vim.keymap.set("n", "<leader>5", [[:1ToggleTerm direction=float<cr>]], {})
 
-  vim.keymap.set("n", "<leader>2", [[:2ToggleTerm direction=horizontal<cr>]], {})
-  vim.keymap.set("n", "<leader>3", [[:3ToggleTerm direction=horizontal<cr>]], {})
-  vim.keymap.set("n", "<leader>4", [[:4ToggleTerm direction=horizontal<cr>]], {})
-
-  vim.keymap.set("n", "<leader>5", [[:5ToggleTerm direction=vertical<cr>]], {})
-  vim.keymap.set("n", "<leader>6", [[:6ToggleTerm direction=vertical<cr>]], {})
-  vim.keymap.set("n", "<leader>7", [[:7ToggleTerm direction=vertical<cr>]], {})
+  vim.keymap.set("n", "<leader>6", [[:5ToggleTerm direction=vertical<cr>]], {})
+  vim.keymap.set("n", "<leader>7", [[:6ToggleTerm direction=vertical<cr>]], {})
+  vim.keymap.set("n", "<leader>8", [[:7ToggleTerm direction=vertical<cr>]], {})
   -- Toggle term with ctrl-space
   vim.keymap.set({ "n", "t" }, "<C-space>", toggle, {})
 end
