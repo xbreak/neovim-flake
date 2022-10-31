@@ -1,3 +1,7 @@
+-- Add custom runtime path where host-specific configuration lives
+local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. '/.config'
+vim.opt.rtp:append(config_home .. "/nvim-xbreak")
+
 -- Global Options
 vim.o.showtabline = 0 -- Never show tabline
 vim.o.timeoutlen = 500 -- Shorter to enter operator-pending mode faster

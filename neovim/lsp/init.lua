@@ -1,3 +1,6 @@
+local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. '/.config'
+local xbreak_config = config_home .. "/nvim-xbreak"
+
 local cmp = require("cmp")
 local lspconfig = require("lspconfig")
 
@@ -91,7 +94,7 @@ luasnip.config.set_config {
 
 -- Note: Luasnip doesn't handle non-exiting directories
 require("luasnip.loaders.from_lua").lazy_load({
-  paths = filter_existing_dirs({ "~/.config/luasnip", "~/.luasnip" })
+  paths = filter_existing_dirs({ xbreak_config .. "/luasnip", ".luasnip" })
 })
 
 -- Navigate forward/expand snippet
