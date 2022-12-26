@@ -9,7 +9,7 @@ if not ok then
   return
 end
 
-local capabilities = require("cmp_nvim_lsp").update_capabilities(
+local capabilities = require("cmp_nvim_lsp").default_capabilities(
 vim.lsp.protocol.make_client_capabilities(),
     {
       -- Disable snippet support to avoid getting "helpful" snippets from clangd

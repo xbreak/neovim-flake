@@ -1,4 +1,4 @@
-
+;; extends
 (expression_statement
   (call_expression
     function:

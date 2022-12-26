@@ -135,12 +135,6 @@
               (pkgs.python3.override {
                 packageOverrides = _: super: {
                   python-lsp-server = super.python-lsp-server.override {
-                    withAutopep8 = false;
-                    withFlake8 = false;
-                    withMccabe = false;
-                    withPyflakes = false;
-                    withPylint = true;
-                    withYapf = false;
                   };
                 };
               })

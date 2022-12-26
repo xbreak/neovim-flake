@@ -222,6 +222,10 @@ require "nvim-treesitter.configs".setup {
   -- ensure_installed = {"cpp", "python", "latex", "nix", "yaml", "json", "rst"},
   highlight = {
     enable = true, -- false will disable the whole extension
+    custom_captures = {
+      -- Highlight the @log4cplus.stmt capture group with the "Comment" highlight group to reduce "noise"
+      ["log4cplus.stmt"] = "Comment",
+    }
   },
   playground = {
     enable = true,
@@ -242,11 +246,14 @@ require "nvim-treesitter.configs".setup {
     },
   }
 }
-
-require "nvim-treesitter.highlight".set_custom_captures {
+--[[
+-- custom_captures are deprecated
+require"nvim-treesitter.highlight".set_custom_captures {
   -- Highlight the @log4cplus.stmt capture group with the "Comment" highlight group to reduce "noise"
   ["log4cplus.stmt"] = "Comment",
 }
+]]
+
 
 require "treesitter-context".setup {
   enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
