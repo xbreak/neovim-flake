@@ -6,6 +6,8 @@ vim.opt.rtp:append(config_home .. "/nvim-xbreak")
 vim.o.showtabline = 0 -- Never show tabline
 vim.o.timeoutlen = 500 -- Shorter to enter operator-pending mode faster
 
+vim.opt.matchpairs:append "<:>"
+
 -- Disabled for now as it's a bit too experimental
 -- vim.go.cmdheight = 0
 
