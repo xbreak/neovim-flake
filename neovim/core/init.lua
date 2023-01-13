@@ -217,6 +217,10 @@ vim.keymap.set("o", "s", function()
 end, {})
 
 -- Tree-sitter
+local function ts_disable(_, bufnr)
+  return api.nvim_buf_line_count(bufnr) > 5000
+end
+
 require "nvim-treesitter.configs".setup {
   -- Broken by https://github.com/nvim-treesitter/nvim-treesitter/pull/3250
   -- see also https://github.com/NixOS/nixpkgs/issues/189838
@@ -224,6 +228,9 @@ require "nvim-treesitter.configs".setup {
   -- ensure_installed = {"cpp", "python", "latex", "nix", "yaml", "json", "rst"},
   highlight = {
     enable = true, -- false will disable the whole extension
+    disable = function(lang, bufnr)
+        return ts_disable(lang, bufnr)
+    end,
     custom_captures = {
       -- Highlight the @log4cplus.stmt capture group with the "Comment" highlight group to reduce "noise"
       ["log4cplus.stmt"] = "Comment",
