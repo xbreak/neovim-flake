@@ -218,7 +218,7 @@ end, {})
 
 -- Tree-sitter
 local function ts_disable(_, bufnr)
-  return api.nvim_buf_line_count(bufnr) > 5000
+  return vim.api.nvim_buf_line_count(bufnr) > 5000
 end
 
 require "nvim-treesitter.configs".setup {
