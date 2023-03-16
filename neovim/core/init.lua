@@ -269,6 +269,27 @@ require "treesitter-context".setup {
   max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
   trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
   patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+    javascript = {
+      "object",
+      "pair",
+    },
+    json = {
+      "object",
+      "pair",
+    },
+    yaml = {
+      "block_mapping_pair",
+      "block_sequence_item",
+    },
+    toml = {
+      "table",
+      "pair",
+    },
+    markdown = {
+      "section",
+    },
+    -- note: rst is not really supported yet
+
     -- For all filetypes
     -- Note that setting an entry here replaces all other patterns for this entry.
     -- By setting the 'default' entry below, you can control which nodes you want to
@@ -284,11 +305,6 @@ require "treesitter-context".setup {
       -- 'switch',
       -- 'case',
     },
-    -- Example for a specific filetype.
-    -- If a pattern is missing, *open a PR* so everyone can benefit.
-    --   rust = {
-    --       'impl_item',
-    --   },
   },
   exact_patterns = {
     -- Example for a specific filetype with Lua patterns
