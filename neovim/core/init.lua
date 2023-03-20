@@ -89,6 +89,8 @@ do
   vim.keymap.set("n", "<c-o>", fzf.git_files, {})
   vim.keymap.set("n", "<c-y>", fzf.blines, {})
   vim.keymap.set("n", "<leader>gg", fzf.live_grep_glob, {})
+  -- Use fzf-lua for selections
+  vim.cmd([[FzfLua register_ui_select]])
 end
 
 -- nvim-possession (session management)
