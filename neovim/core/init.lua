@@ -1,9 +1,9 @@
 -- Add custom runtime path where host-specific configuration lives
-local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. '/.config'
+local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config"
 vim.opt.rtp:append(config_home .. "/nvim-xbreak")
 
 -- Global Options
-vim.o.showtabline = 0 -- Never show tabline
+vim.o.showtabline = 0  -- Never show tabline
 vim.o.timeoutlen = 500 -- Shorter to enter operator-pending mode faster
 
 vim.opt.matchpairs:append "<:>"
@@ -91,6 +91,49 @@ do
   vim.keymap.set("n", "<leader>gg", fzf.live_grep_glob, {})
 end
 
+-- nvim-possession (session management)
+-- note: uses fzf-lua
+do
+  local possession = require "nvim-possession"
+  possession.setup({
+    -- Defaults from fzf-lua
+    fzf_winopts = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+      height = 0.85,           -- window height
+      width  = 0.80,           -- window width
+    }
+  })
+  vim.api.nvim_create_user_command(
+    "Session",
+    function(opts)
+      -- opts.args string arguments
+      -- opts.fargs map of arguments
+      local cmd = opts.args
+      if cmd == "" then
+        cmd = "ls"
+      end
+      vim.pretty_print(cmd)
+      cmds = {
+        ["ls"] = function() possession.list() end,
+        ["save-as"] = function() possession.new() end,
+        ["save"] = function() possession.update() end,
+      }
+      local found = false
+      for k, v in pairs(cmds) do
+        if k == cmd then
+          found = true
+          v()
+        end
+      end
+    end,
+    {
+      nargs = "?",
+      complete = function(ArgLead, CmdLine, CursorPos)
+        return { "ls", "save", "save-as" }
+      end,
+    })
+end
+
 -- lualine
 do
   local lualine_toggleterm = {
@@ -133,7 +176,7 @@ do
         -- note: Certain colorschemes do not specify the bg color for the highlight group I want to
         -- use, this leads to the separator < not showing, so I just set the fg color instead.
         { trailing_whitespace, color = { fg = get_fg_color("DiagnosticError") } },
-        { mixed_indent, color = { fg = get_fg_color("DiagnosticError") } },
+        { mixed_indent,        color = { fg = get_fg_color("DiagnosticError") } },
       },
       lualine_y = {},
       lualine_z = { "location" }
@@ -200,21 +243,21 @@ require "hop".setup {
 
 -- hop
 vim.keymap.set("n", "s", function()
-  require "hop".hint_char1({})
-end, {})
+                 require "hop".hint_char1({})
+               end, {})
 
 vim.keymap.set("n", "gs", function()
-  require "hop".hint_char1({
-    multi_windows = true,
-  })
-end, {})
+                 require "hop".hint_char1({
+                   multi_windows = true,
+                 })
+               end, {})
 
 -- Operator pending mapping
 vim.keymap.set("o", "s", function()
-  require "hop".hint_char1({
-    inclusive_jump = true
-  })
-end, {})
+                 require "hop".hint_char1({
+                   inclusive_jump = true
+                 })
+               end, {})
 
 -- Tree-sitter
 local function ts_disable(_, bufnr)
@@ -229,7 +272,7 @@ require "nvim-treesitter.configs".setup {
   highlight = {
     enable = true, -- false will disable the whole extension
     disable = function(lang, bufnr)
-        return ts_disable(lang, bufnr)
+      return ts_disable(lang, bufnr)
     end,
     custom_captures = {
       -- Highlight the @log4cplus.stmt capture group with the "Comment" highlight group to reduce "noise"
@@ -239,7 +282,7 @@ require "nvim-treesitter.configs".setup {
   playground = {
     enable = true,
     disable = {},
-    updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
+    updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
     persist_queries = false, -- Whether the query persists across vim sessions
     keybindings = {
       toggle_query_editor = "o",
@@ -262,13 +305,12 @@ require"nvim-treesitter.highlight".set_custom_captures {
   ["log4cplus.stmt"] = "Comment",
 }
 ]]
-
-
 require "treesitter-context".setup {
-  enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-  max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+  enable = true,        -- Enable this plugin (Can be enabled/disabled later via commands)
+  max_lines = 0,        -- How many lines the window should span. Values <= 0 mean no limit.
   trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-  patterns = { -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+  patterns = {
+                        -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
     javascript = {
       "object",
       "pair",
@@ -316,7 +358,7 @@ require "treesitter-context".setup {
   -- [!] The options below are exposed but shouldn't require your attention,
   --     you can safely ignore them.
 
-  zindex = 20, -- The Z-index of the context window
+  zindex = 20,     -- The Z-index of the context window
   mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
   separator = nil, -- Separator between context and content. Should be a single character string, like '-'.
 }
@@ -394,36 +436,36 @@ end
 function _G.fixup_solarized()
   local g = vim.g
   -- black
-	g.terminal_color_0 = "#073642"
-	g.terminal_color_8 = "#002B36"
+  g.terminal_color_0 = "#073642"
+  g.terminal_color_8 = "#002B36"
 
   -- red
-	g.terminal_color_1 = "#dc322f"
-	g.terminal_color_9 = "#CB4B16"
+  g.terminal_color_1 = "#dc322f"
+  g.terminal_color_9 = "#CB4B16"
 
   -- green
-	g.terminal_color_2 = "#859900"
-	g.terminal_color_10 = "#586E75"
+  g.terminal_color_2 = "#859900"
+  g.terminal_color_10 = "#586E75"
 
   -- yellow
-	g.terminal_color_3 = "#b58900"
-	g.terminal_color_11 = "#657B83"
+  g.terminal_color_3 = "#b58900"
+  g.terminal_color_11 = "#657B83"
 
   -- blue
-	g.terminal_color_4 = "#268bd2"
-	g.terminal_color_12 = "#839496"
+  g.terminal_color_4 = "#268bd2"
+  g.terminal_color_12 = "#839496"
 
   -- magenta
-	g.terminal_color_5 = "#D33682"
-	g.terminal_color_13 = "#6c71c4"
+  g.terminal_color_5 = "#D33682"
+  g.terminal_color_13 = "#6c71c4"
 
   -- cyan
-	g.terminal_color_6 = "#2aa198"
-	g.terminal_color_14 = "#93A1A1"
+  g.terminal_color_6 = "#2aa198"
+  g.terminal_color_14 = "#93A1A1"
 
   -- white
-	g.terminal_color_7 = "#EEE8D5"
-	g.terminal_color_15 = "#FDF6E3"
+  g.terminal_color_7 = "#EEE8D5"
+  g.terminal_color_15 = "#FDF6E3"
 end
 
 -- Also triggers autocmds from init.vim

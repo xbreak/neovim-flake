@@ -31,6 +31,10 @@
       url = "github:caenrique/nvim-maximize-window-toggle";
       flake = false;
     };
+    nvim-possession = {
+      url = "github:gennaro-tedesco/nvim-possession";
+      flake = false;
+    };
   };
   outputs = {
     self,
@@ -45,6 +49,7 @@
       "vim-fswitch"
       "vim-rst"
       "nvim-maximize-window-toggle"
+      "nvim-possession"
     ];
     system = "x86_64-linux";
     pkgs = import nixpkgs-unstable {

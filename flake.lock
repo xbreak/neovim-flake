@@ -3,11 +3,11 @@
     "fzf-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1671639805,
-        "narHash": "sha256-jBUlRs3dwyb4lb4RX3XCUrvO0knKKZCLaoxM/Td+w1k=",
+        "lastModified": 1679322430,
+        "narHash": "sha256-5yAaIcLEXO81+7njVRHvRhLgk++jdWVaIQs+SI1bhrE=",
         "owner": "ibhagwan",
         "repo": "fzf-lua",
-        "rev": "5abf66f63bf08121dd4e917488b59ccb693eee12",
+        "rev": "37125a1f810443566d6bc8ac14180ad63b664109",
         "type": "github"
       },
       "original": {
@@ -18,11 +18,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1671813978,
-        "narHash": "sha256-oo4we+9IO1D+QS1mOSNh08l9ABDPWLyqvNC0DD0QtZM=",
+        "lastModified": 1672580127,
+        "narHash": "sha256-3lW3xZslREhJogoOkjeZtlBtvFMyxHku7I/9IVehhT8=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "79e63f30ed2ff36cd0d9c2f7dadae5925c1a65db",
+        "rev": "0874168639713f547c05947c76124f78441ea46c",
         "type": "github"
       },
       "original": {
@@ -33,11 +33,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1671722432,
-        "narHash": "sha256-ojcZUekIQeOZkHHzR81st7qxX99dB1Eaaq6PU5MNeKc=",
+        "lastModified": 1679172431,
+        "narHash": "sha256-XEh5gIt5otaUbEAPUY5DILUTyWe1goAyeqQtmwaFPyI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "652e92b8064949a11bc193b90b74cb727f2a1405",
+        "rev": "1603d11595a232205f03d46e635d919d1e1ec5b9",
         "type": "github"
       },
       "original": {
@@ -62,14 +62,30 @@
         "type": "github"
       }
     },
+    "nvim-possession": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1676840065,
+        "narHash": "sha256-BmU3LC+jVOwG5+38nJkMt0/pOc5yvKBYNUTdvIL7eEs=",
+        "owner": "gennaro-tedesco",
+        "repo": "nvim-possession",
+        "rev": "b97ad11fb91e555f6cb4edc996a4bbdeeefa8baa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gennaro-tedesco",
+        "repo": "nvim-possession",
+        "type": "github"
+      }
+    },
     "nvim-tree-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1671760059,
-        "narHash": "sha256-oOw9gDI4ojQV73z1eFFyA74J9JJHMBWgy1vw+yViiDs=",
+        "lastModified": 1679313173,
+        "narHash": "sha256-3/+ZGz7bXL2Q9cqYNRepxbmCr55/lx+rxzhNm3U0+Ew=",
         "owner": "kyazdani42",
         "repo": "nvim-tree.lua",
-        "rev": "9e4c39572f631bb60ee15cb9d46e1daa9927a45e",
+        "rev": "a50723e35f57f89fb67019127a16d90f16edfef8",
         "type": "github"
       },
       "original": {
@@ -100,6 +116,7 @@
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvim-maximize-window-toggle": "nvim-maximize-window-toggle",
+        "nvim-possession": "nvim-possession",
         "nvim-tree-lua": "nvim-tree-lua",
         "robotframework-vim": "robotframework-vim",
         "vim-fswitch": "vim-fswitch",

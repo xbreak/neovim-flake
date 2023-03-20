@@ -1,4 +1,4 @@
-local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. '/.config'
+local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config"
 local xbreak_config = config_home .. "/nvim-xbreak"
 
 local cmp = require("cmp")
@@ -10,12 +10,12 @@ if not ok then
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities(
-vim.lsp.protocol.make_client_capabilities(),
-    {
-      -- Disable snippet support to avoid getting "helpful" snippets from clangd
-      -- (doesn't seem to work as cmp still presents [lsp] sourced snippets)
-      snippetSupport = false
-    }
+  vim.lsp.protocol.make_client_capabilities(),
+  {
+    -- Disable snippet support to avoid getting "helpful" snippets from clangd
+    -- (doesn't seem to work as cmp still presents [lsp] sourced snippets)
+    snippetSupport = false
+  }
 )
 
 -- Accepts a table of paths that are filtered based on if they exist
@@ -89,7 +89,7 @@ end
 local luasnip = require("luasnip")
 luasnip.config.set_config {
   -- Keep last snippet around -> can jump back in.
-  history = true;
+  history = true,
 }
 
 -- Note: Luasnip doesn't handle non-exiting directories
@@ -99,17 +99,17 @@ require("luasnip.loaders.from_lua").lazy_load({
 
 -- Navigate forward/expand snippet
 vim.keymap.set({ "i", "s" }, "<c-k>", function()
-  if luasnip.expand_or_jumpable() then
-    luasnip.expand_or_jump()
-  end
-end, { silent = true })
+                 if luasnip.expand_or_jumpable() then
+                   luasnip.expand_or_jump()
+                 end
+               end, { silent = true })
 
 -- Navigate backward
 vim.keymap.set({ "i", "s" }, "<c-j>", function()
-  if luasnip.jumpable(-1) then
-    luasnip.jump(-1)
-  end
-end, { silent = true })
+                 if luasnip.jumpable(-1) then
+                   luasnip.jump(-1)
+                 end
+               end, { silent = true })
 
 -- Select an option
 vim.keymap.set("i", "<c-l>", function()
@@ -135,7 +135,6 @@ cmp.setup({
       cmp.close()
       fallback()
     end,
-
     ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
     ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
@@ -172,7 +171,7 @@ cmp.setup({
   sources = {
     { name = "nvim_lsp" },
     { name = "path" },
-    { name = "buffer", keyword_length = 3 },
+    { name = "buffer",                 keyword_length = 3 },
     { name = "luasnip" },
     { name = "nvim_lsp_signature_help" },
   },
@@ -223,7 +222,6 @@ lspconfig.pylsp.setup({
       },
     },
   },
-
 })
 
 lspconfig.yamlls.setup({
@@ -240,14 +238,13 @@ lspconfig.clangd.setup({
     "--log=info",
     "--resource-dir=@clang@/resource-root",
     "--query-driver=**/g++,**/gcc",
-    "--all-scopes-completion",
   },
   on_attach = on_attach,
 })
 
 -- lua lsp
-require "lspconfig".sumneko_lua.setup {
-  cmd = { "@sumneko_lua_language_server@/bin/lua-language-server" },
+require "lspconfig".lua_ls.setup {
+  cmd = { "@lua_language_server@/bin/lua-language-server" },
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {

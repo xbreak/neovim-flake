@@ -35,6 +35,7 @@
     vim-fswitch
     nvim-maximize-window-toggle
     bufdelete-nvim
+    nvim-possession
 
     # Terminal support
     toggleterm-nvim
@@ -124,7 +125,7 @@
               (pkgs)
               shellcheck
               yaml-language-server
-              sumneko-lua-language-server
+              lua-language-server
               ;
             inherit
               (pkgs.llvmPackages_latest)
