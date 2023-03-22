@@ -236,6 +236,47 @@ require "nvim-tree".setup {
   }
 }
 
+-- nvim-notify
+do
+  local notify = require"notify"
+  notify.setup({
+    stages = "static",
+  })
+  -- Hook up notify to be used by vim
+  vim.notify = notify
+
+  -- For some reason we cannot fix highlights immedately but have to
+  -- schedule it (maybe notify itself sets up things lazily).
+  vim.schedule(function()
+    -- Fix up default highlight
+    local link = function(from, to)
+      -- To get the equivalent of `hi! link <from> <to>` we have to clear <from> first
+      -- https://github.com/neovim/neovim/issues/20323
+      vim.api.nvim_set_hl(0, from, {})
+      vim.api.nvim_set_hl(0, from, { link = to})
+    end
+    link("NotifyERRORBorder", "DiagnosticError")
+    link("NotifyERRORIcon", "DiagnosticError")
+    link("NotifyERRORTitle", "DiagnosticError")
+
+    link("NotifyWARNBorder", "DiagnosticWarn")
+    link("NotifyWARNIcon", "DiagnosticWarn")
+    link("NotifyWARNTitle", "DiagnosticWarn")
+
+    link("NotifyINFOBorder", "DiagnosticInfo")
+    link("NotifyINFOIcon", "DiagnosticInfo")
+    link("NotifyINFOTitle", "DiagnosticInfo")
+
+    link("NotifyDEBUGBorder", "DiagnosticHint")
+    link("NotifyDEBUGIcon", "DiagnosticHint")
+    link("NotifyDEBUGTitle", "DiagnosticHint")
+
+    link("NotifyTRACEBorder", "Comment")
+    link("NotifyTRACEIcon", "Comment")
+    link("NotifyTRACETitle", "Comment")
+  end)
+end
+
 -- easy-motion that doesn't modify buffer
 require "hop".setup {
   case_insensitive = false,

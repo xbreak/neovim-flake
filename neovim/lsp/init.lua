@@ -85,6 +85,21 @@ local function on_attach(_, buf)
   -- }, buf)
 end
 
+-- vim.lsp setup
+do
+  -- Setup notifications from lsp to use vim.notify
+  -- table from lsp severity to vim severity.
+  local severity = {
+    "error",
+    "warn",
+    "info",
+    "info", -- map both hint and info to info?
+  }
+  vim.lsp.handlers["window/showMessage"] = function(err, method, params, client_id)
+    vim.notify(method.message, severity[params.type])
+  end
+end
+
 -- Luasnip
 local luasnip = require("luasnip")
 luasnip.config.set_config {

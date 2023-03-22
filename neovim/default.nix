@@ -57,6 +57,7 @@
     robotframework-vim
 
     # Themes/visualization
+    nvim-notify
     nvim-solarized-lua
     nord-vim
     nvim-web-devicons
