@@ -1,7 +1,6 @@
 local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config"
 local xbreak_config = config_home .. "/nvim-xbreak"
 
-local cmp = require("cmp")
 local lspconfig = require("lspconfig")
 
 local ok, lspkind = pcall(require, "lspkind")
@@ -140,89 +139,96 @@ vim.keymap.set("i", "<c-u>", require "luasnip.extras.select_choice")
 
 
 -- Cmp
-cmp.setup({
-  confirmation = { default_behavior = cmp.ConfirmBehavior.Replace },
-  formatting = {
-    format = require("lspkind").cmp_format({ with_text = false }),
-  },
-  mapping = {
-    ["<C-e>"] = function(fallback)
-      cmp.close()
-      fallback()
-    end,
-    ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-    ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-    ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-e>"] = cmp.mapping.abort(),
-    ["<cr>"] = cmp.mapping.confirm(),
-    ["<c-y>"] = cmp.mapping(
-      cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Insert,
-        select = true,
-      },
-      { "i", "c" }
-    ),
-    ["<c-space>"] = cmp.mapping {
-      i = cmp.mapping.complete(),
-      c = function(
-        _ --[[fallback]]
-      )
-        if cmp.visible() then
-          if not cmp.confirm { select = true } then
-            return
+do
+  local cmp = require("cmp")
+  cmp.setup({
+    confirmation = { default_behavior = cmp.ConfirmBehavior.Replace },
+    formatting = {
+      format = require("lspkind").cmp_format({ with_text = false }),
+    },
+    mapping = {
+      ["<C-e>"] = function(fallback)
+        cmp.close()
+        fallback()
+      end,
+      ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+      ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
+      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      ["<C-e>"] = cmp.mapping.abort(),
+      ["<cr>"] = cmp.mapping.confirm(),
+      ["<c-y>"] = cmp.mapping(
+        cmp.mapping.confirm {
+          behavior = cmp.ConfirmBehavior.Insert,
+          select = true,
+        },
+        { "i", "c" }
+      ),
+      ["<c-space>"] = cmp.mapping {
+        i = cmp.mapping.complete(),
+        c = function(
+          _ --[[fallback]]
+        )
+          if cmp.visible() then
+            if not cmp.confirm { select = true } then
+              return
+            end
+          else
+            cmp.complete()
           end
-        else
-          cmp.complete()
-        end
+        end,
+      },
+    },
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
       end,
     },
-  },
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  sources = {
-    { name = "nvim_lsp" },
-    { name = "path" },
-    { name = "buffer",                 keyword_length = 3 },
-    { name = "luasnip" },
-    { name = "nvim_lsp_signature_help" },
-  },
-  formatting = {
-    format = lspkind.cmp_format {
-      with_text = true,
-      menu = {
-        buffer = "[buf]",
-        nvim_lsp = "[lsp]",
-        nvim_lua = "[api]",
-        path = "[path]",
-        luasnip = "[snip]",
+    sources = {
+      { name = "nvim_lsp" },
+      { name = "path" },
+      { name = "buffer",                 keyword_length = 3 },
+      { name = "luasnip" },
+      { name = "nvim_lsp_signature_help" },
+    },
+    formatting = {
+      format = lspkind.cmp_format {
+        with_text = true,
+        menu = {
+          buffer = "[buf]",
+          nvim_lsp = "[lsp]",
+          nvim_lua = "[api]",
+          path = "[path]",
+          luasnip = "[snip]",
+        },
       },
     },
-  },
-  experimental = {
-    native_menu = false,
-    ghost_text = true,
-  },
-})
+    experimental = {
+      native_menu = false,
+      ghost_text = true,
+    },
+  })
 
-cmp.setup.cmdline("/", {
-  sources = {
-    { name = "nvim_lsp_document_symbol" },
-    { name = "buffer" },
-  },
-})
+  --[[
+  -- Disable cmp completions for search and commandline as they're broken and no quick fix was found
+  cmp.setup.cmdline({"/", "?"}, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = "nvim_lsp_document_symbol" },
+      { name = "buffer" },
+    },
+  })
 
-cmp.setup.cmdline(":", {
-  completion = { autocomplete = false },
-  mapping = cmp.mapping.preset.cmdline({}),
-  sources = cmp.config.sources({
-    { name = "cmdline" },
-    { name = "path" },
-  }),
-})
+  cmp.setup.cmdline(":", {
+    completion = { autocomplete = false },
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = "cmdline" },
+      { name = "path" },
+    }),
+  })
+  --]]
+end
 
 lspconfig.pylsp.setup({
   capabilities = capabilities,
