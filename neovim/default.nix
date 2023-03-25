@@ -141,7 +141,7 @@
                 };
               })
               .withPackages
-              (ps: with ps; [pyls-isort python-lsp-black python-lsp-server]);
+              (ps: with ps; [pyls-isort python-lsp-black python-lsp-server pylsp-mypy]);
           }
         }
       '';
