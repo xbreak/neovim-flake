@@ -23,7 +23,8 @@ vim_cmd([[cnoreabbrev Bd Bdelete]])
 vim_cmd([[cnoreabbrev Bd! Bdelete!]])
 
 -- Toggle window maximization
-vim.keymap.set("n", "<c-w>o", [[:ToggleOnly<cr>]], { silent = true })
+vim.keymap.set("n", "<c-w>o", [[:ToggleOnly<cr>]],
+               { silent = true, desc = "Toggle Window Maximization" })
 
 -- Toggle normal/terminal mode with <C-]> for terminal buffers
 function _G.set_terminal_keymaps()
@@ -84,11 +85,16 @@ do
     },
   }
   -- fzf-lua mappings
-  vim.keymap.set("n", "<c-p>", fzf.buffers, {})
-  vim.keymap.set("n", "<c-u>", fzf.files, {})
-  vim.keymap.set("n", "<c-o>", fzf.git_files, {})
-  vim.keymap.set("n", "<c-y>", fzf.blines, {})
-  vim.keymap.set("n", "<leader>gg", fzf.live_grep_glob, {})
+  -- Common operations get C-* mapping
+  vim.keymap.set("n", "<c-p>", fzf.buffers, { desc = "Fzf Buffers" })
+  vim.keymap.set("n", "<c-u>", fzf.files, { desc = "Fzf Files" })
+  vim.keymap.set("n", "<c-o>", fzf.git_files, { desc = "Fzf Git Files" })
+  -- Less common use <leader>f* mapping
+  vim.keymap.set("n", "<leader>fb", fzf.blines, { desc = "Fzf Buffer Lines" })
+  vim.keymap.set("n", "<leader>fr", fzf.resume, { desc = "Fzf Resume" })
+  vim.keymap.set("n", "<leader>fg", fzf.live_grep_glob, { desc = "Fzf Grep" })
+  vim.keymap.set("n", "<leader>fd", fzf.lsp_finder, { desc = "Fzf LSP" })
+
   -- Use fzf-lua for selections
   vim.cmd([[FzfLua register_ui_select]])
 end
@@ -101,8 +107,8 @@ do
     -- Defaults from fzf-lua
     fzf_winopts = {
       border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-      height = 0.85,           -- window height
-      width  = 0.80,           -- window width
+      height = 0.85, -- window height
+      width  = 0.80, -- window width
     }
   })
   vim.api.nvim_create_user_command(
@@ -238,7 +244,7 @@ require "nvim-tree".setup {
 
 -- nvim-notify
 do
-  local notify = require"notify"
+  local notify = require "notify"
   notify.setup({
     stages = "static",
   })
@@ -253,7 +259,7 @@ do
       -- To get the equivalent of `hi! link <from> <to>` we have to clear <from> first
       -- https://github.com/neovim/neovim/issues/20323
       vim.api.nvim_set_hl(0, from, {})
-      vim.api.nvim_set_hl(0, from, { link = to})
+      vim.api.nvim_set_hl(0, from, { link = to })
     end
     link("NotifyERRORBorder", "DiagnosticError")
     link("NotifyERRORIcon", "DiagnosticError")
@@ -287,20 +293,23 @@ require "hop".setup {
 -- hop
 vim.keymap.set("n", "s", function()
                  require "hop".hint_char1({})
-               end, {})
+               end,
+               { desc = "Hop" })
 
 vim.keymap.set("n", "gs", function()
                  require "hop".hint_char1({
                    multi_windows = true,
                  })
-               end, {})
+               end,
+               { desc = "Hop Multi Windows" })
 
 -- Operator pending mapping
 vim.keymap.set("o", "s", function()
                  require "hop".hint_char1({
                    inclusive_jump = true
                  })
-               end, {})
+               end,
+               { desc = "Hop" })
 
 -- Tree-sitter
 local function ts_disable(_, bufnr)
@@ -353,7 +362,7 @@ require "treesitter-context".setup {
   max_lines = 0,        -- How many lines the window should span. Values <= 0 mean no limit.
   trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
   patterns = {
-                        -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+    -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
     javascript = {
       "object",
       "pair",
@@ -442,10 +451,6 @@ do
     on_open = function(t)
       if not t.__xbreak_first then
         t.__xbreak_first = true
-        -- Set simplified PS1 when first entering terminal
-        -- NOTE: This assumes that it's an interactive shell, so will
-        -- randomly fail otherwise.
-        t:send([[ set +o history; unset PROMPT_COMMAND; export PS1="\w$ "; clear; set -o history]])
       end
       last_opened_closed = t.id
     end,
@@ -463,17 +468,25 @@ do
 
   -- Predefine mappings for standard terminal layouts.
   -- In a later revision the idea is to allow the visible terminals to be toggled as a group.
-  vim.keymap.set("n", "<leader>1", [[:2ToggleTerm direction=horizontal<cr>]], {})
-  vim.keymap.set("n", "<leader>2", [[:3ToggleTerm direction=horizontal<cr>]], {})
-  vim.keymap.set("n", "<leader>3", [[:4ToggleTerm direction=horizontal<cr>]], {})
+  vim.keymap.set("n", "<leader>1", [[:2ToggleTerm direction=horizontal<cr>]],
+                 { desc = "Toggle Horizontal Term 1" })
+  vim.keymap.set("n", "<leader>2", [[:3ToggleTerm direction=horizontal<cr>]],
+                 { desc = "Toggle Horizontal Term 2" })
+  vim.keymap.set("n", "<leader>3", [[:4ToggleTerm direction=horizontal<cr>]],
+                 { desc = "Toggle Horizontal Term 3" })
 
-  vim.keymap.set("n", "<leader>5", [[:1ToggleTerm direction=float<cr>]], {})
+  vim.keymap.set("n", "<leader>5", [[:1ToggleTerm direction=float<cr>]],
+                 { desc = "Toggle Floating Term" })
 
-  vim.keymap.set("n", "<leader>6", [[:5ToggleTerm direction=vertical<cr>]], {})
-  vim.keymap.set("n", "<leader>7", [[:6ToggleTerm direction=vertical<cr>]], {})
-  vim.keymap.set("n", "<leader>8", [[:7ToggleTerm direction=vertical<cr>]], {})
+  vim.keymap.set("n", "<leader>6", [[:5ToggleTerm direction=vertical<cr>]],
+                 { desc = "Toggle Vertical Term 1" })
+  vim.keymap.set("n", "<leader>7", [[:6ToggleTerm direction=vertical<cr>]],
+                 { desc = "Toggle Vertical Term 2" })
+  vim.keymap.set("n", "<leader>8", [[:7ToggleTerm direction=vertical<cr>]],
+                 { desc = "Toggle Vertical Term 3" })
   -- Toggle term with ctrl-space
-  vim.keymap.set({ "n", "t" }, "<C-space>", toggle, {})
+  vim.keymap.set({ "n", "t" }, "<C-space>", toggle,
+                { desc = "Toggle Current/Last Terminal" })
 end
 
 function _G.fixup_solarized()

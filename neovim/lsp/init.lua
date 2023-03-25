@@ -116,26 +116,26 @@ vim.keymap.set({ "i", "s" }, "<c-k>", function()
                  if luasnip.expand_or_jumpable() then
                    luasnip.expand_or_jump()
                  end
-               end, { silent = true })
+               end, { silent = true, desc = "Snippet Forward" })
 
 -- Navigate backward
 vim.keymap.set({ "i", "s" }, "<c-j>", function()
                  if luasnip.jumpable(-1) then
                    luasnip.jump(-1)
                  end
-               end, { silent = true })
+               end, { silent = true, desc = "Snippet Backward" })
 
 -- Select an option
 vim.keymap.set("i", "<c-l>", function()
-  -- If there's no active choice don't do anything
-  if not require "luasnip.session".active_choice_node then
-    return
-  end
-  if luasnip.choice_active() then
-    luasnip.change_choice(1)
-  end
-end)
-vim.keymap.set("i", "<c-u>", require "luasnip.extras.select_choice")
+                 -- If there's no active choice don't do anything
+                 if not require "luasnip.session".active_choice_node then
+                   return
+                 end
+                 if luasnip.choice_active() then
+                   luasnip.change_choice(1)
+                 end
+               end, { desc = "Snippet Change Choice" })
+vim.keymap.set("i", "<c-u>", require "luasnip.extras.select_choice", { desc = "Snippet Select Choice" })
 
 
 -- Cmp
