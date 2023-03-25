@@ -139,6 +139,7 @@ vim.keymap.set("i", "<c-u>", require "luasnip.extras.select_choice", { desc = "S
 
 
 -- Cmp
+-- See https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/config/mapping.lua for presets
 do
   local cmp = require("cmp")
   cmp.setup({
@@ -146,39 +147,13 @@ do
     formatting = {
       format = require("lspkind").cmp_format({ with_text = false }),
     },
-    mapping = {
-      ["<C-e>"] = function(fallback)
-        cmp.close()
-        fallback()
-      end,
-      ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-      ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-      ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-f>"] = cmp.mapping.scroll_docs(4),
-      ["<C-e>"] = cmp.mapping.abort(),
-      ["<cr>"] = cmp.mapping.confirm(),
-      ["<c-y>"] = cmp.mapping(
-        cmp.mapping.confirm {
-          behavior = cmp.ConfirmBehavior.Insert,
-          select = true,
-        },
-        { "i", "c" }
-      ),
-      ["<c-space>"] = cmp.mapping {
-        i = cmp.mapping.complete(),
-        c = function(
-          _ --[[fallback]]
-        )
-          if cmp.visible() then
-            if not cmp.confirm { select = true } then
-              return
-            end
-          else
-            cmp.complete()
-          end
-        end,
-      },
-    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
     snippet = {
       expand = function(args)
         luasnip.lsp_expand(args.body)
@@ -209,12 +184,9 @@ do
     },
   })
 
-  --[[
-  -- Disable cmp completions for search and commandline as they're broken and no quick fix was found
   cmp.setup.cmdline({"/", "?"}, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-      { name = "nvim_lsp_document_symbol" },
       { name = "buffer" },
     },
   })
@@ -223,11 +195,11 @@ do
     completion = { autocomplete = false },
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-      { name = "cmdline" },
+      { name = "cmdline", option = { ignore_cmds = {}}},
       { name = "path" },
+      { name = "cmdline-history" },
     }),
   })
-  --]]
 end
 
 lspconfig.pylsp.setup({

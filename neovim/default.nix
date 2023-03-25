@@ -160,11 +160,13 @@
             nvim-cmp
             cmp-spell
             cmp-buffer
+            cmp-path
+            cmp-cmdline
+            cmp-cmdline-history
             cmp-nvim-lsp
             cmp-nvim-lsp-document-symbol
             cmp-nvim-lsp-signature-help
             cmp-nvim-lua
-            cmp-path
             cmp_luasnip
           ];
       };
