@@ -30,18 +30,17 @@ end
 
 local function on_attach(_, buf)
   local map = {
+    -- Note: Some keymaps are setup with lspsaga.nvim below
     K = "lua vim.lsp.buf.hover()",
     ["<space>dd"] = "Trouble document_diagnostics",
     ["<space>dw"] = "Trouble workspace_diagnostics",
     ["="] = "lua vim.lsp.buf.format( { async = true })",
-    ["<space>r"] = "Trouble lsp_references",
     ["[d"] = "lua vim.lsp.diagnostic.goto_prev()",
     ["]d"] = "lua vim.lsp.diagnostic.goto_next()",
-    ga = "CodeActionMenu",
     gd = "lua vim.lsp.buf.definition()",
-    ge = "lua vim.lsp.diagnostic.show_line_diagnostics()",
-    gr = "lua vim.lsp.buf.rename()",
     gt = "lua vim.lsp.buf.type_definition()",
+    ge = "lua vim.lsp.diagnostic.show_line_diagnostics()",
+    -- gr = "lua vim.lsp.buf.rename()",
   }
 
   for k, v in pairs(map) do
@@ -276,6 +275,15 @@ require "lspconfig".lua_ls.setup {
 
 require("trouble").setup()
 
+
+-- lspsaga.nvim
+-- should be loaded after other lsp plugins
+do
+  require("lspsaga").setup({})
+  local set = vim.keymap.set
+  set("n", "<C-]>", "<cmd>Lspsaga peek_definition<CR>", { desc = "LSP Peek Definition" })
+  set("n", "gr", "<cmd>Lspsaga lsp_finder<CR>", { desc = "LSP Finder" })
+end
 
 -- Set up clang-format
 

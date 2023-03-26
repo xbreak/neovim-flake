@@ -152,6 +152,7 @@
             nvim-lspconfig
             trouble-nvim
             lspkind-nvim
+            lspsaga-nvim-original
             luasnip
             # Overlaps with cmp-nvim-lsp-signature-help which is being evaluated.
             # lsp_signature-nvim
