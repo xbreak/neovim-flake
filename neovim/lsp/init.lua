@@ -189,16 +189,6 @@ do
       { name = "buffer" },
     },
   })
-
-  cmp.setup.cmdline(":", {
-    completion = { autocomplete = false },
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = "cmdline", option = { ignore_cmds = {}}},
-      { name = "path" },
-      { name = "cmdline-history" },
-    }),
-  })
 end
 
 lspconfig.pylsp.setup({
