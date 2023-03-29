@@ -145,14 +145,17 @@
           }
         }
       '';
-      packages.myVimPackage = with pkgs.vimPlugins; {
+      packages.myVimPackage = let
+        # Use lspsaga from flake inputs rather than pkgs which is older.
+        inherit (pkgs.neovimPlugins) lspsaga-nvim;
+      in with pkgs.vimPlugins; {
         start =
           corePlugins
           ++ [
             nvim-lspconfig
             trouble-nvim
             lspkind-nvim
-            lspsaga-nvim-original
+            lspsaga-nvim
             luasnip
             # Overlaps with cmp-nvim-lsp-signature-help which is being evaluated.
             # lsp_signature-nvim
@@ -162,8 +165,6 @@
             cmp-spell
             cmp-buffer
             cmp-path
-            cmp-cmdline
-            cmp-cmdline-history
             cmp-nvim-lsp
             cmp-nvim-lsp-document-symbol
             cmp-nvim-lsp-signature-help

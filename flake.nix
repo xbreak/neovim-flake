@@ -35,6 +35,10 @@
       url = "github:gennaro-tedesco/nvim-possession";
       flake = false;
     };
+    lspsaga-nvim = {
+      url = "github:glepnir/lspsaga.nvim";
+      flake = false;
+    };
   };
   outputs = {
     self,
@@ -50,6 +54,7 @@
       "vim-rst"
       "nvim-maximize-window-toggle"
       "nvim-possession"
+      "lspsaga-nvim"
     ];
     system = "x86_64-linux";
     pkgs = import nixpkgs-unstable {

@@ -3,16 +3,32 @@
     "fzf-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1679589068,
-        "narHash": "sha256-RjEdjc0eUZ7QufMzJRzwG8xYsTkuHxu3dLQ8TsWa7Bw=",
+        "lastModified": 1679904235,
+        "narHash": "sha256-vUI/uVvsIlVYd34h9eW9lU1OqR4ZJ6gkD99W0Hcfbo0=",
         "owner": "ibhagwan",
         "repo": "fzf-lua",
-        "rev": "79a74aebab4cd5fca460c61dc47e5e1d7a54b01e",
+        "rev": "d49f79fbdaf5247ce694637555e8cd503f6fc05f",
         "type": "github"
       },
       "original": {
         "owner": "ibhagwan",
         "repo": "fzf-lua",
+        "type": "github"
+      }
+    },
+    "lspsaga-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1680096153,
+        "narHash": "sha256-tcvpDHGFV7elpy8af/EOsIRyvaqEqLTF/dEWCTSBaSY=",
+        "owner": "glepnir",
+        "repo": "lspsaga.nvim",
+        "rev": "abb0e427ffd70cb5b240f17d996b7c84cd55d001",
+        "type": "github"
+      },
+      "original": {
+        "owner": "glepnir",
+        "repo": "lspsaga.nvim",
         "type": "github"
       }
     },
@@ -113,6 +129,7 @@
     "root": {
       "inputs": {
         "fzf-lua": "fzf-lua",
+        "lspsaga-nvim": "lspsaga-nvim",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvim-maximize-window-toggle": "nvim-maximize-window-toggle",
