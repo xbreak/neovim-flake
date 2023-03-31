@@ -160,6 +160,7 @@ do
         end
       },
       { name = "path" },
+      { name = "nvim_lua" },
       { name = "buffer",                 keyword_length = 3 },
       { name = "luasnip" },
       { name = "nvim_lsp_signature_help" },
@@ -186,6 +187,7 @@ do
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
       { name = "buffer" },
+      { name = "nvim_lsp_document_symbol" },
     },
   })
 end
