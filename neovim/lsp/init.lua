@@ -8,14 +8,8 @@ if not ok then
   return
 end
 
-local capabilities = require("cmp_nvim_lsp").default_capabilities(
-  vim.lsp.protocol.make_client_capabilities(),
-  {
-    -- Disable snippet support to avoid getting "helpful" snippets from clangd
-    -- (doesn't seem to work as cmp still presents [lsp] sourced snippets)
-    snippetSupport = false
-  }
-)
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = false;
 
 -- Accepts a table of paths that are filtered based on if they exist
 local function filter_existing_dirs(dirs)
@@ -147,11 +141,11 @@ do
       format = require("lspkind").cmp_format({ with_text = false }),
     },
     mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      ["<C-Space>"] = cmp.mapping.complete(),
+      ["<C-e>"] = cmp.mapping.abort(),
+      ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     }),
     snippet = {
       expand = function(args)
@@ -159,7 +153,12 @@ do
       end,
     },
     sources = {
-      { name = "nvim_lsp" },
+      {
+        name = "nvim_lsp",
+        entry_filter = function(entry, ctx)
+          return require "cmp".lsp.CompletionItemKind.Snippet ~= entry:get_kind()
+        end
+      },
       { name = "path" },
       { name = "buffer",                 keyword_length = 3 },
       { name = "luasnip" },
@@ -183,7 +182,7 @@ do
     },
   })
 
-  cmp.setup.cmdline({"/", "?"}, {
+  cmp.setup.cmdline({ "/", "?" }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
       { name = "buffer" },
