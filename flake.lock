@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "cmp-nvim-lsp-document-symbol": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1680344437,
+        "narHash": "sha256-kvy0Q/QA3S4xDqmRLCePmLHYmH7uG19rcgPPKdail/0=",
+        "owner": "xbreak",
+        "repo": "cmp-nvim-lsp-document-symbol",
+        "rev": "7ed09f8b89044976f7866e09a815dcbbab902ae9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xbreak",
+        "repo": "cmp-nvim-lsp-document-symbol",
+        "type": "github"
+      }
+    },
     "fzf-lua": {
       "flake": false,
       "locked": {
@@ -128,6 +144,7 @@
     },
     "root": {
       "inputs": {
+        "cmp-nvim-lsp-document-symbol": "cmp-nvim-lsp-document-symbol",
         "fzf-lua": "fzf-lua",
         "lspsaga-nvim": "lspsaga-nvim",
         "nixpkgs": "nixpkgs",

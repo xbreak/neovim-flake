@@ -142,6 +142,73 @@ do
     })
 end
 
+-- Cmp
+-- See https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/config/mapping.lua for presets
+do
+  local cmp = require("cmp")
+  local format = require"lspkind".cmp_format {
+    mode = "symbol_text",
+    menu = {
+      buffer = "[buf]",
+      nvim_lsp = "[lsp]",
+      nvim_lua = "[api]",
+      path = "[path]",
+      luasnip = "[snip]",
+      cmdline_history = "[hist]",
+    },
+  }
+  cmp.setup({
+    confirmation = { default_behavior = cmp.ConfirmBehavior.Replace },
+    formatting = {
+      format = format
+    },
+    mapping = cmp.mapping.preset.insert({
+      ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      ["<C-Space>"] = cmp.mapping.complete(),
+      ["<C-e>"] = cmp.mapping.abort(),
+      ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    snippet = {
+      expand = function(args)
+        luasnip.lsp_expand(args.body)
+      end,
+    },
+    sources = {
+      {
+        name = "nvim_lsp",
+        entry_filter = function(entry, ctx)
+          return require "cmp".lsp.CompletionItemKind.Snippet ~= entry:get_kind()
+        end
+      },
+      { name = "path" },
+      { name = "nvim_lua" },
+      { name = "buffer",                 keyword_length = 3 },
+      { name = "luasnip" },
+      { name = "nvim_lsp_signature_help" },
+    },
+    formatting = {
+      format = format,
+    },
+    experimental = {
+      native_menu = false,
+      ghost_text = true,
+    },
+  })
+
+  cmp.setup.cmdline({ "/", "?" }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    formatting = {
+      format = format,
+    },
+    sources = {
+      { name = "buffer" },
+      { name = "cmdline_history" },
+      { name = "nvim_lsp_document_symbol" },
+    },
+  })
+end
+
 -- lualine
 do
   local lualine_toggleterm = {

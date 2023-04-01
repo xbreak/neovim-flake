@@ -22,7 +22,10 @@
     src = ./dotplug;
   };
 
-  corePlugins = with pkgs.vimPlugins;
+  corePlugins = let
+    inherit (pkgs.neovimPlugins) cmp-nvim-lsp-document-symbol;
+  in
+  with pkgs.vimPlugins;
   with pkgs.neovimPlugins; [
     # My config as plugin
     dotplug
@@ -36,6 +39,20 @@
     nvim-maximize-window-toggle
     bufdelete-nvim
     nvim-possession
+
+    # Completion
+    nvim-cmp
+    lspkind-nvim  # Adds lsp glyphs to cmp
+    cmp-spell
+    cmp-buffer
+    cmp-cmdline-history
+    cmp-path
+    cmp-nvim-lsp
+    cmp-nvim-lsp-document-symbol
+    cmp-nvim-lsp-signature-help
+    cmp-nvim-lua
+    cmp_luasnip
+
 
     # Terminal support
     toggleterm-nvim
@@ -154,22 +171,11 @@
           ++ [
             nvim-lspconfig
             trouble-nvim
-            lspkind-nvim
             lspsaga-nvim
             luasnip
             # Overlaps with cmp-nvim-lsp-signature-help which is being evaluated.
             # lsp_signature-nvim
 
-            # nvim-cmp and completion sources
-            nvim-cmp
-            cmp-spell
-            cmp-buffer
-            cmp-path
-            cmp-nvim-lsp
-            cmp-nvim-lsp-document-symbol
-            cmp-nvim-lsp-signature-help
-            cmp-nvim-lua
-            cmp_luasnip
           ];
       };
     };

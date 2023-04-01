@@ -39,6 +39,10 @@
       url = "github:glepnir/lspsaga.nvim";
       flake = false;
     };
+    cmp-nvim-lsp-document-symbol = {
+      url = "github:xbreak/cmp-nvim-lsp-document-symbol";
+      flake = false;
+    };
   };
   outputs = {
     self,
@@ -55,6 +59,7 @@
       "nvim-maximize-window-toggle"
       "nvim-possession"
       "lspsaga-nvim"
+      "cmp-nvim-lsp-document-symbol"
     ];
     system = "x86_64-linux";
     pkgs = import nixpkgs-unstable {
