@@ -10,7 +10,7 @@ tnoremap <C-]> <C-\><C-n>                         " a more convenient escape fro
 set sw=4
 set ts=4
 set expandtab
-set completeopt=menu,noinsert,menuone
+set completeopt=menu,menuone,noselect
 set splitbelow
 set splitright
 
