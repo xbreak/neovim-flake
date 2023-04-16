@@ -96,6 +96,7 @@
       p.tree-sitter-lua
       p.tree-sitter-make
       p.tree-sitter-markdown
+      p.tree-sitter-markdown_inline
       p.tree-sitter-nix
       p.tree-sitter-python
       p.tree-sitter-query

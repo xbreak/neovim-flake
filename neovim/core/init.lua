@@ -197,6 +197,9 @@ do
     },
   })
 
+  -- cmdline preset is broken will mess upp standard command line completion:
+  -- https://github.com/hrsh7th/nvim-cmp/issues/1511
+  --[[
   cmp.setup.cmdline({ "/", "?" }, {
     mapping = cmp.mapping.preset.cmdline(),
     formatting = {
@@ -208,6 +211,7 @@ do
       { name = "nvim_lsp_document_symbol" },
     },
   })
+  --]]
 end
 
 -- lualine
