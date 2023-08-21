@@ -43,6 +43,10 @@
       url = "github:xbreak/cmp-nvim-lsp-document-symbol";
       flake = false;
     };
+    nvim-treesitter-context = {
+      url = "github:xbreak/nvim-treesitter-context";
+      flake = false;
+    };
   };
   outputs = {
     self,
@@ -60,6 +64,7 @@
       "nvim-possession"
       "lspsaga-nvim"
       "cmp-nvim-lsp-document-symbol"
+      "nvim-treesitter-context"
     ];
     system = "x86_64-linux";
     pkgs = import nixpkgs-unstable {

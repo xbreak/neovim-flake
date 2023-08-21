@@ -23,7 +23,7 @@
   };
 
   corePlugins = let
-    inherit (pkgs.neovimPlugins) cmp-nvim-lsp-document-symbol;
+    inherit (pkgs.neovimPlugins) cmp-nvim-lsp-document-symbol nvim-treesitter-context;
   in
   with pkgs.vimPlugins;
   with pkgs.neovimPlugins; [

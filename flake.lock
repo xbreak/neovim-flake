@@ -19,11 +19,11 @@
     "fzf-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1681324089,
-        "narHash": "sha256-hG75zCThOglFXTfg/uOcn3J0b8ZKuMKxj0Gz4y7aN/U=",
+        "lastModified": 1692578820,
+        "narHash": "sha256-qV49Wva0gcODsCjYkYl5NZv1XnLzRlar5rqXL2B4ZIQ=",
         "owner": "ibhagwan",
         "repo": "fzf-lua",
-        "rev": "08f57e9a3c58c4ebef4c96de271d674d12e77607",
+        "rev": "fe649a0d042e68d5810c9da8045560e885a705d7",
         "type": "github"
       },
       "original": {
@@ -35,11 +35,11 @@
     "lspsaga-nvim": {
       "flake": false,
       "locked": {
-        "lastModified": 1681470671,
-        "narHash": "sha256-mekeKttJSsBpTxMShC0l29/Wx3VKUnHMh6YtLYtx9Lk=",
+        "lastModified": 1692516937,
+        "narHash": "sha256-01UYKb2HpjZgbcq7zWNFLqCwj2r119XXNFjLE2tqV0o=",
         "owner": "glepnir",
         "repo": "lspsaga.nvim",
-        "rev": "b2feb95e84776f7c9cdfb96e4c89a582c9ade0e4",
+        "rev": "7106caa511e4be4b43cb584b3ecafa95baa90a8b",
         "type": "github"
       },
       "original": {
@@ -50,11 +50,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1672580127,
-        "narHash": "sha256-3lW3xZslREhJogoOkjeZtlBtvFMyxHku7I/9IVehhT8=",
+        "lastModified": 1685573264,
+        "narHash": "sha256-Zffu01pONhs/pqH07cjlF10NnMDLok8ix5Uk4rhOnZQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0874168639713f547c05947c76124f78441ea46c",
+        "rev": "380be19fbd2d9079f677978361792cb25e8a3635",
         "type": "github"
       },
       "original": {
@@ -65,11 +65,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1681557730,
-        "narHash": "sha256-j2E3639kS3Qop2jQPyqWCdenZNaqIdxfoTvAHnGuAGI=",
+        "lastModified": 1692447944,
+        "narHash": "sha256-fkJGNjEmTPvqBs215EQU4r9ivecV5Qge5cF/QDLVn3U=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "85b081528b937df4bfcaee80c3541b58f397df8b",
+        "rev": "d680ded26da5cf104dd2735a51e88d2d8f487b4d",
         "type": "github"
       },
       "original": {
@@ -97,11 +97,11 @@
     "nvim-possession": {
       "flake": false,
       "locked": {
-        "lastModified": 1680512446,
-        "narHash": "sha256-0K0swpkXo17lyIr5hinJO6Pw86Wtz6+dF1ZpUiM1lxI=",
+        "lastModified": 1687954853,
+        "narHash": "sha256-12uZwfbkftWNiAgvdzL78wqkfJIhbKUKr6TiXqT92/M=",
         "owner": "gennaro-tedesco",
         "repo": "nvim-possession",
-        "rev": "3f833362fe04cebaa3787453f0a309edc159c1ab",
+        "rev": "01478ce7c3c8ea58e9b0c3859c43483a0adec5be",
         "type": "github"
       },
       "original": {
@@ -113,16 +113,32 @@
     "nvim-tree-lua": {
       "flake": false,
       "locked": {
-        "lastModified": 1681624690,
-        "narHash": "sha256-kLvRB1w4wHGOOWj4fQ6pyhvKJ4+mqOkhYe04uicfHmA=",
+        "lastModified": 1692516854,
+        "narHash": "sha256-JEVackds4skWQJWeVr1ECraobXj+5YgEeWJ9ZytU98k=",
         "owner": "kyazdani42",
         "repo": "nvim-tree.lua",
-        "rev": "8f392fa763b7ee80a48c714b630acaf6d1fe1854",
+        "rev": "920868dba13466586897a8f40220eca6b2caac41",
         "type": "github"
       },
       "original": {
         "owner": "kyazdani42",
         "repo": "nvim-tree.lua",
+        "type": "github"
+      }
+    },
+    "nvim-treesitter-context": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1692600212,
+        "narHash": "sha256-yfl3CdH4ZDGljKAdVwCHHo/DNhESegi1PeMT582AGNU=",
+        "owner": "xbreak",
+        "repo": "nvim-treesitter-context",
+        "rev": "1eed92f49f73b083c2edb18b07f0e7dc0e453a30",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xbreak",
+        "repo": "nvim-treesitter-context",
         "type": "github"
       }
     },
@@ -152,6 +168,7 @@
         "nvim-maximize-window-toggle": "nvim-maximize-window-toggle",
         "nvim-possession": "nvim-possession",
         "nvim-tree-lua": "nvim-tree-lua",
+        "nvim-treesitter-context": "nvim-treesitter-context",
         "robotframework-vim": "robotframework-vim",
         "vim-fswitch": "vim-fswitch",
         "vim-rst": "vim-rst"

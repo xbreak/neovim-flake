@@ -435,6 +435,9 @@ require "treesitter-context".setup {
   trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
   patterns = {
     -- Match patterns for TS nodes. These get wrapped to match at word boundaries.
+    cpp = {
+      "namespace_definition",
+    },
     javascript = {
       "object",
       "pair",
