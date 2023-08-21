@@ -209,7 +209,9 @@ require("trouble").setup()
 -- lspsaga.nvim
 -- should be loaded after other lsp plugins
 do
-  require("lspsaga").setup({})
+  require("lspsaga").setup({
+    symbol_in_winbar = { enable = false },
+  })
   local set = vim.keymap.set
   set("n", "<C-]>", "<cmd>Lspsaga peek_definition<CR>", { desc = "LSP Peek Definition" })
   set("n", "gr", "<cmd>Lspsaga lsp_finder<CR>", { desc = "LSP Finder" })
