@@ -3,7 +3,7 @@
 
   inputs = {
     # Nixpkgs
-    nixpkgs.url = "nixpkgs/nixos-22.05";
+    nixpkgs.url = "nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     # Neovim Plugins
@@ -75,7 +75,7 @@
 
     pluginOverlay = top: last: let
       buildPlug = name:
-        top.vimUtils.buildVimPluginFrom2Nix {
+        top.vimUtils.buildVimPlugin {
           pname = name;
           version = "flake";
           src = builtins.getAttr name inputs;

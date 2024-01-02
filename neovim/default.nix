@@ -16,7 +16,7 @@
       substitutions);
 
   # My own config
-  dotplug = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  dotplug = pkgs.vimUtils.buildVimPlugin {
     pname = "dotplug";
     version = "latest";
     src = ./dotplug;
