@@ -102,6 +102,7 @@
       p.tree-sitter-query
       p.tree-sitter-rst
       p.tree-sitter-vim
+      p.tree-sitter-vimdoc
       p.tree-sitter-yaml
     ]))
     playground
