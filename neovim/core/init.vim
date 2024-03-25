@@ -67,7 +67,9 @@ autocmd FileType lua setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType json setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType yaml setlocal ts=4 sts=4 sw=4 expandtab
 autocmd FileType rst,markdown setlocal tw=100 sw=4 expandtab
-      \ formatlistpat=^\\s*\\d\\+[\\]:.)}\\t\ ]\\s*
+autocmd FileType rst setlocal formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\|^\\s*[-*+]\\s\\+
+autocmd FileType markdown setlocal formatlistpat=^\\s*\\d\\+\\.\\s\\+\\\|^[-*+]\\s\\+\\\|^\\[^\\ze[^\\]]\\+\\]:
+
 "
 " C++
 augroup eso_cpp
