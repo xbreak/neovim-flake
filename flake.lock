@@ -177,15 +177,15 @@
     "vim-fswitch": {
       "flake": false,
       "locked": {
-        "lastModified": 1510327990,
-        "narHash": "sha256-LMNptjApgqBd7RMyKEWG/bQ2ahtglKr5Rf3LuDge044=",
-        "owner": "derekwyatt",
+        "lastModified": 1719473083,
+        "narHash": "sha256-8RcD+IUnmTHJcCU8mV2hS2wolPmlmGSx1y2jXmruk0U=",
+        "owner": "xbreak",
         "repo": "vim-fswitch",
-        "rev": "94acdd8bc92458d3bf7e6557df8d93b533564491",
+        "rev": "2b9e4db88e981e1b460d5ea57ade0ae0c47e70b0",
         "type": "github"
       },
       "original": {
-        "owner": "derekwyatt",
+        "owner": "xbreak",
         "repo": "vim-fswitch",
         "type": "github"
       }

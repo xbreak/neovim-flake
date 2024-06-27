@@ -20,7 +20,7 @@
       flake = false;
     };
     vim-fswitch = {
-      url = "github:derekwyatt/vim-fswitch";
+      url = "github:xbreak/vim-fswitch";
       flake = false;
     };
     vim-rst = {
