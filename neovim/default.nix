@@ -23,7 +23,7 @@
   };
 
   corePlugins = let
-    inherit (pkgs.neovimPlugins) cmp-nvim-lsp-document-symbol nvim-treesitter-context;
+    inherit (pkgs.neovimPlugins);
   in
   with pkgs.vimPlugins;
   with pkgs.neovimPlugins; [
@@ -166,7 +166,7 @@
       '';
       packages.myVimPackage = let
         # Use lspsaga from flake inputs rather than pkgs which is older.
-        inherit (pkgs.neovimPlugins) lspsaga-nvim;
+        inherit (pkgs.neovimPlugins);
       in with pkgs.vimPlugins; {
         start =
           corePlugins

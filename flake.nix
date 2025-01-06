@@ -7,14 +7,6 @@
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
 
     # Neovim Plugins
-    nvim-tree-lua = {
-      url = "github:kyazdani42/nvim-tree.lua";
-      flake = false;
-    };
-    fzf-lua = {
-      url = "github:ibhagwan/fzf-lua";
-      flake = false;
-    };
     robotframework-vim = {
       url = "github:rasjani/robotframework-vim";
       flake = false;
@@ -35,18 +27,6 @@
       url = "github:gennaro-tedesco/nvim-possession";
       flake = false;
     };
-    lspsaga-nvim = {
-      url = "github:glepnir/lspsaga.nvim";
-      flake = false;
-    };
-    cmp-nvim-lsp-document-symbol = {
-      url = "github:xbreak/cmp-nvim-lsp-document-symbol";
-      flake = false;
-    };
-    nvim-treesitter-context = {
-      url = "github:xbreak/nvim-treesitter-context";
-      flake = false;
-    };
   };
   outputs = {
     self,
@@ -55,16 +35,11 @@
     ...
   } @ inputs: let
     plugins = [
-      "nvim-tree-lua"
-      "fzf-lua"
       "robotframework-vim"
       "vim-fswitch"
       "vim-rst"
       "nvim-maximize-window-toggle"
       "nvim-possession"
-      "lspsaga-nvim"
-      "cmp-nvim-lsp-document-symbol"
-      "nvim-treesitter-context"
     ];
     system = "x86_64-linux";
     pkgs = import nixpkgs-unstable {
