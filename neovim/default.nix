@@ -10,8 +10,8 @@
   };
   lib = pkgs.lib;
   substitutePackages = src: substitutions:
-    pkgs.substituteAll ({inherit src;}
-      // lib.mapAttrs'
+    pkgs.replaceVars src (
+      lib.mapAttrs'
       (k: lib.nameValuePair (builtins.replaceStrings ["-"] ["_"] k))
       substitutions);
 
@@ -23,7 +23,7 @@
   };
 
   corePlugins = let
-    inherit (pkgs.neovimPlugins) cmp-nvim-lsp-document-symbol nvim-treesitter-context;
+    inherit (pkgs.neovimPlugins) cmp-nvim-lsp-document-symbol;
   in
   with pkgs.vimPlugins;
   with pkgs.neovimPlugins; [
@@ -76,6 +76,7 @@
     # Themes/visualization
     nvim-notify
     nvim-solarized-lua
+    nightfox-nvim
     nord-vim
     nvim-web-devicons
     gruvbox-nvim
@@ -143,7 +144,6 @@
           substitutePackages ./lsp/init.lua {
             inherit
               (pkgs)
-              shellcheck
               yaml-language-server
               lua-language-server
               ;
@@ -165,14 +165,11 @@
         }
       '';
       packages.myVimPackage = let
-        # Use lspsaga from flake inputs rather than pkgs which is older.
-        inherit (pkgs.neovimPlugins) lspsaga-nvim;
       in with pkgs.vimPlugins; {
         start =
           corePlugins
           ++ [
             nvim-lspconfig
-            trouble-nvim
             lspsaga-nvim
             luasnip
             # Overlaps with cmp-nvim-lsp-signature-help which is being evaluated.

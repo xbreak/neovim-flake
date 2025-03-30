@@ -96,7 +96,8 @@ do
   vim.keymap.set("n", "<leader>fd", fzf.lsp_finder, { desc = "Fzf LSP" })
 
   -- Use fzf-lua for selections
-  vim.cmd([[FzfLua register_ui_select]])
+  fzf.register_ui_select()
+  --vim.cmd([[FzfLua register_ui_select]])
 end
 
 -- nvim-possession (session management)
