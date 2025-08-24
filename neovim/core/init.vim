@@ -105,7 +105,9 @@ autocmd ColorScheme *
 
 " Fix up bat themes based on current colorscheme
 autocmd Colorscheme solarized
-      \ let $BAT_THEME = (&background == 'dark' ? 'Solarized (dark)' : 'Solarized (light)')
+      \ let $BAT_THEME = (&background == 'dark' ? 'Solarized (dark)' : 'Solarized (light)') |
+      \ :lua fixup_solarized()
+
 
 autocmd Colorscheme nord
       \ let $BAT_THEME = 'Nord'
