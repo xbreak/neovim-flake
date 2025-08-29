@@ -75,7 +75,7 @@
 
     # Themes/visualization
     nvim-notify
-    nvim-solarized-lua
+    solarized-nvim
     nightfox-nvim
     nord-vim
     nvim-web-devicons
