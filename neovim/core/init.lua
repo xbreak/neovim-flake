@@ -109,11 +109,12 @@ require('solarized').setup({
       ["@punctuation.special"] = { fg = colors.red },
 
       -- NvimTree
+      -- note: Linking between NvimTree groups caused nvim to randomly hang at startup!
       NvimTreeNormal = { link = "Normal" },
       NvimTreeGitFileNewHL = { fg = colors.red },
-      NvimTreeGitNewIcon = { link = "NvimTreeGitFileNewHL" },
+      NvimTreeGitNewIcon = { fg = colors.red },
       NvimTreeGitFileStagedHL = { fg = colors.green },
-      NvimTreeGitStagedIcon = { link = "NvimTreeGitFileStagedHL" },
+      NvimTreeGitStagedIcon = { fg = colors.green },
 
       NvimTreeGitFileDirtyHL = { fg = colors.yellow },
       NvimTreeGitDirtyIcon = {  fg = colors.yellow },
