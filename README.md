@@ -76,7 +76,7 @@ File support
 Appearance
 
 - lualine-nvim
-- nvim-solarized-lua
+- solarized.nvim (nvim-solarized-lua is not maintained)
 - nord-vim
 - nvim-web-devicons
 - gruvbox-nvim
@@ -88,7 +88,6 @@ Same as core but in addition have the following plugins:
 - nvim-lspconfig
 - treesitter
 - nvim-treesitter-context
-- trouble-nvim
 - lspkind-nvim
 - luasnip
 - lsp_signature-nvim

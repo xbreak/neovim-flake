@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "cmp-nvim-lsp-document-symbol": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1680344437,
+        "narHash": "sha256-kvy0Q/QA3S4xDqmRLCePmLHYmH7uG19rcgPPKdail/0=",
+        "owner": "xbreak",
+        "repo": "cmp-nvim-lsp-document-symbol",
+        "rev": "7ed09f8b89044976f7866e09a815dcbbab902ae9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "xbreak",
+        "repo": "cmp-nvim-lsp-document-symbol",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1720535198,
@@ -17,11 +33,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1736012469,
-        "narHash": "sha256-/qlNWm/IEVVH7GfgAIyP6EsVZI6zjAx1cV5zNyrs+rI=",
+        "lastModified": 1750506804,
+        "narHash": "sha256-VLFNc4egNjovYVxDGyBYTrvVCgDYgENp5bVi9fPTDYc=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "8f3e1f807051e32d8c95cd12b9b421623850a34d",
+        "rev": "4206c4cb56751df534751b058295ea61357bbbaa",
         "type": "github"
       },
       "original": {
@@ -49,11 +65,11 @@
     "nvim-possession": {
       "flake": false,
       "locked": {
-        "lastModified": 1734602384,
-        "narHash": "sha256-Qm+YZ4LtjhZdkIvxl8uHZYgDa5ooqhhoaDK756+4NDk=",
+        "lastModified": 1749409355,
+        "narHash": "sha256-QBi6O15YjYrvjH9del76TbEPa6wC+tjw0efPth2otto=",
         "owner": "gennaro-tedesco",
         "repo": "nvim-possession",
-        "rev": "2ac8d9b466f030fa887f72f391e61c44bae1f8db",
+        "rev": "49bc69d7dd72207973e2537d73bfd9f3c1bf2678",
         "type": "github"
       },
       "original": {
@@ -80,13 +96,31 @@
     },
     "root": {
       "inputs": {
+        "cmp-nvim-lsp-document-symbol": "cmp-nvim-lsp-document-symbol",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nvim-maximize-window-toggle": "nvim-maximize-window-toggle",
         "nvim-possession": "nvim-possession",
         "robotframework-vim": "robotframework-vim",
+        "solarized-nvim": "solarized-nvim",
         "vim-fswitch": "vim-fswitch",
         "vim-rst": "vim-rst"
+      }
+    },
+    "solarized-nvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1730379245,
+        "narHash": "sha256-fNytlDlYHqX1W1pqt8xLoud+AtMQDlmtUkbwZArj4bs=",
+        "owner": "maxmx03",
+        "repo": "solarized.nvim",
+        "rev": "c0dfe1cbfabd93b546baf5f1408f5df7e02e2050",
+        "type": "github"
+      },
+      "original": {
+        "owner": "maxmx03",
+        "repo": "solarized.nvim",
+        "type": "github"
       }
     },
     "vim-fswitch": {

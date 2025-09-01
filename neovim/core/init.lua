@@ -11,8 +11,175 @@ vim.opt.matchpairs:append "<:>"
 -- Disabled for now as it's a bit too experimental
 -- vim.go.cmdheight = 0
 
+--Fixup the terminal colors not set by solarized theme
+--@param colors solarized.palette
+--@type solarized.color
+local fixup_term_colors = function(colors, color)
+  local g = vim.g
+  -- black
+  g.terminal_color_0 = colors.base02
+  -- bright black
+  g.terminal_color_8 = colors.base03
 
+  -- red
+  g.terminal_color_1 = colors.red
+  -- bright red
+  g.terminal_color_9 = colors.orange
+
+  -- green
+  g.terminal_color_2 = colors.green
+  -- bright green
+  g.terminal_color_10 = colors.base01
+
+  -- yellow
+  g.terminal_color_3 = colors.yellow
+  -- bright yellow
+  g.terminal_color_11 = colors.base00
+
+  -- blue
+  g.terminal_color_4 = colors.blue
+  -- bright blue
+  g.terminal_color_12 = colors.base0
+
+  -- magenta
+  g.terminal_color_5 = colors.magenta
+  -- bright magenta
+  g.terminal_color_13 = colors.violet
+
+  -- cyan
+  g.terminal_color_6 = colors.cyan
+  -- bright cyan
+  g.terminal_color_14 = colors.base1
+
+  -- white
+  g.terminal_color_7 = colors.base2
+  -- bright white
+  g.terminal_color_15 = colors.base3
+end
+
+--
 -- Plugin configuration
+--
+
+-- Solarized
+require('solarized').setup({
+  transparent = {
+    enabled = false,
+    pmenu = true,
+    normal = true,
+    normalfloat = true,
+    neotree = false,
+    nvimtree = false,
+    whichkey = true,
+    telescope = true,
+    lazy = true,
+  },
+  on_highlights = function(colors, color)
+    -- Use colors from solarized to fixup terminal colors
+    fixup_term_colors(colors, color)
+
+    ---@type solarized.highlights
+    local groups = {
+      -- Builtin
+      Keyword = { fg = colors.green },
+      Statement = { fg = colors.green },
+      Function = { fg = colors.blue },
+      Parameter = { link = "Normal" },
+      Boolean = { fg = colors.cyan },
+      Delimiter = { fg = colors.blue },
+      Visual = { fg = colors.base3, bg = colors.base1 },
+      Search = { fg = colors.base3, bg = colors.red },
+      IncSearch = { fg = colors.base3, bg = colors.yellow },
+      LineNr = { fg = colors.base1, bg = colors.base2 },
+      CursorLineNr = { fg = colors.base1, bg = colors.base3 },
+      WinSeparator = { link = "Normal" },
+
+      -- treesitter
+      ["@lsp.type.namespace"] = { fg = colors.blue },
+      ["@lsp.type.variable"] = { link = "@variable" },
+      ["@operator"] = { fg = colors.base00 },
+      ["@constant"] = { fg = colors.cyan },
+      ["@keyword"] = { link = "Keyword" },
+      ["@number"] = { fg = colors.cyan },
+      ["@variable"] = { fg = colors.base00 },
+      ["@variable.parameter"] = { link = "Parameter" },
+      ["@keyword.import"] = { fg = colors.red },
+      ["@punctuation"] = { fg = colors.red },
+      ["@punctuation.bracket"] = { fg = colors.red },
+      ["@punctuation.special"] = { fg = colors.red },
+
+      -- NvimTree
+      NvimTreeNormal = { link = "Normal" },
+      NvimTreeGitFileNewHL = { fg = colors.red },
+      NvimTreeGitNewIcon = { link = "NvimTreeGitFileNewHL" },
+      NvimTreeGitFileStagedHL = { fg = colors.green },
+      NvimTreeGitStagedIcon = { link = "NvimTreeGitFileStagedHL" },
+
+      NvimTreeGitFileDirtyHL = { fg = colors.yellow },
+      NvimTreeGitDirtyIcon = {  fg = colors.yellow },
+    }
+    return groups
+  end,
+  on_colors = function(colors, color)
+        local lighten = color.tint
+        local darken = color.darken
+        local shade = color.shade
+
+        return {
+            --default red is a bit too punchy
+            red = darken(colors.red, 10),
+        }
+    end,
+  palette = 'solarized', -- solarized (default) | selenized
+  variant = 'spring', -- "spring" | "summer" | "autumn" | "winter" (default)
+  error_lens = {
+    text = false,
+    symbol = false,
+  },
+  styles = {
+    enabled = true,
+    types = {},
+    functions = {},
+    parameters = {},
+    comments = { italic = true, bold = false },
+    strings = {},
+    keywords = {},
+    variables = {},
+    constants = {},
+  },
+  plugins = {
+    treesitter = true,
+    lspconfig = true,
+    navic = true,
+    cmp = true,
+    indentblankline = true,
+    neotree = false,
+    nvimtree = true,
+    whichkey = true,
+    dashboard = true,
+    gitsigns = true,
+    telescope = true,
+    noice = true,
+    hop = true,
+    ministatusline = true,
+    minitabline = false,
+    ministarter = false,
+    minicursorword = true,
+    notify = true,
+    rainbowdelimiters = true,
+    bufferline = true,
+    lazy = true,
+    rendermarkdown = true,
+    ale = true,
+    coc = true,
+    leap = true,
+    alpha = true,
+    yanky = true,
+    gitgutter = true,
+    mason = true,
+    flash = true,
+  },
+})
 
 local vim_cmd = vim.api.nvim_command
 local lualine = require("lualine")
@@ -229,13 +396,19 @@ do
     },
   }
 
+  local solarized_palette = require 'solarized.palette'
+  local colors = require('solarized.utils').get_colors()
+  local foreground = colors.base02
+  local theme = "solarized_light"
+  if vim.o.background == 'dark' then
+    foreground = colors.base2
+    theme = "solarized_dark"
+  end
+
   lualine.setup {
     options = {
       icons_enabled = true,
-      -- TODO: Patch solarized to make TERMINAL mode prominent
-      --       this needs to take colorscheme switching into account though.
-      --       see https://github.com/nvim-lualine/lualine.nvim#customizing-themes
-      theme = "auto",
+      theme = theme,
       component_separators = { left = "", right = "" },
       section_separators = { left = "", right = "" },
       disabled_filetypes = { "NvimTree" },
@@ -295,19 +468,24 @@ do
   }
 end
 
--- nvim-tree
+-- NvimTree
+-- For git status mapping see:
+-- https://github.com/nvim-tree/nvim-tree.lua/blob/master/lua/nvim-tree/renderer/decorator/git.lua
 require "nvim-tree".setup {
+  filters = {
+    custom = { "^\\.git$" },
+  },
   renderer = {
     group_empty = true,
     icons = {
       glyphs = {
         git = {
-          unstaged = "ﯽ", -- ",
-          staged = "",
+          unstaged = "\u{ea73}",
+          staged = "\u{f00c}",
           unmerged = "",
           renamed = "➜",
-          untracked = "ﬤ",
-          deleted = "ﮁ",
+          untracked = "?",
+          deleted = "\u{f01b4}",
         }
       }
     }
@@ -564,40 +742,5 @@ do
                 { desc = "Toggle Current/Last Terminal" })
 end
 
-function _G.fixup_solarized()
-  local g = vim.g
-  -- black
-  g.terminal_color_0 = "#073642"
-  g.terminal_color_8 = "#002B36"
-
-  -- red
-  g.terminal_color_1 = "#dc322f"
-  g.terminal_color_9 = "#CB4B16"
-
-  -- green
-  g.terminal_color_2 = "#859900"
-  g.terminal_color_10 = "#586E75"
-
-  -- yellow
-  g.terminal_color_3 = "#b58900"
-  g.terminal_color_11 = "#657B83"
-
-  -- blue
-  g.terminal_color_4 = "#268bd2"
-  g.terminal_color_12 = "#839496"
-
-  -- magenta
-  g.terminal_color_5 = "#D33682"
-  g.terminal_color_13 = "#6c71c4"
-
-  -- cyan
-  g.terminal_color_6 = "#2aa198"
-  g.terminal_color_14 = "#93A1A1"
-
-  -- white
-  g.terminal_color_7 = "#EEE8D5"
-  g.terminal_color_15 = "#FDF6E3"
-end
-
--- Also triggers autocmds from init.vim
-vim_cmd("colorscheme solarized")
+-- Set colorscheme to solarized
+vim.cmd [[colorscheme solarized]]

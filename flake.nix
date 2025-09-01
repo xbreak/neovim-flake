@@ -15,6 +15,10 @@
       url = "github:xbreak/vim-fswitch";
       flake = false;
     };
+    solarized-nvim = {
+      url = "github:maxmx03/solarized.nvim";
+      flake = false;
+    };
     vim-rst = {
       url = "github:habamax/vim-rst";
       flake = false;
@@ -25,6 +29,10 @@
     };
     nvim-possession = {
       url = "github:gennaro-tedesco/nvim-possession";
+      flake = false;
+    };
+    cmp-nvim-lsp-document-symbol = {
+      url = "github:xbreak/cmp-nvim-lsp-document-symbol";
       flake = false;
     };
   };
@@ -40,6 +48,8 @@
       "vim-rst"
       "nvim-maximize-window-toggle"
       "nvim-possession"
+      "cmp-nvim-lsp-document-symbol"
+      "solarized-nvim"
     ];
     system = "x86_64-linux";
     pkgs = import nixpkgs-unstable {

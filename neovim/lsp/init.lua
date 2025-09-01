@@ -8,6 +8,28 @@ if not ok then
   return
 end
 
+-- Builtin
+vim.diagnostic.config({
+  -- Use the default configuration
+  -- virtual_lines = true
+
+  -- Alternatively, customize specific options
+  virtual_lines = {
+   -- Only show virtual line diagnostics for the current cursor line
+   current_line = true,
+  },
+})
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+    if client:supports_method('textDocument/completion') then
+      vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
+    end
+  end,
+})
+
+
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = false;
 
@@ -26,14 +48,12 @@ local function on_attach(_, buf)
   local map = {
     -- Note: Some keymaps are setup with lspsaga.nvim below
     K = "lua vim.lsp.buf.hover()",
-    ["<space>dd"] = "Trouble document_diagnostics",
-    ["<space>dw"] = "Trouble workspace_diagnostics",
     ["="] = "lua vim.lsp.buf.format( { async = true })",
     ["[d"] = "lua vim.lsp.diagnostic.goto_prev()",
     ["]d"] = "lua vim.lsp.diagnostic.goto_next()",
     gd = "lua vim.lsp.buf.definition()",
     gt = "lua vim.lsp.buf.type_definition()",
-    ge = "lua vim.lsp.diagnostic.show_line_diagnostics()",
+    ge = "lua vim.lsp.diagnostic.show_line_diagnostics()", -- obsolete after virtual lines
     -- gr = "lua vim.lsp.buf.rename()",
   }
 
@@ -202,8 +222,6 @@ require "lspconfig".lua_ls.setup {
     },
   },
 }
-
-require("trouble").setup()
 
 
 -- lspsaga.nvim
