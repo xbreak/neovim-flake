@@ -356,9 +356,6 @@ do
       { name = "luasnip" },
       { name = "nvim_lsp_signature_help" },
     },
-    formatting = {
-      format = format,
-    },
     experimental = {
       native_menu = false,
       ghost_text = true,
