@@ -1,8 +1,6 @@
 local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config"
 local xbreak_config = config_home .. "/nvim-xbreak"
 
-local lspconfig = require("lspconfig")
-
 local ok, lspkind = pcall(require, "lspkind")
 if not ok then
   return
@@ -141,7 +139,7 @@ vim.keymap.set("i", "<c-l>", function()
 vim.keymap.set("i", "<c-u>", require "luasnip.extras.select_choice", { desc = "Snippet Select Choice" })
 
 -- LSP servers setup
-lspconfig.pylsp.setup({
+vim.lsp.config("pylsp", {
   capabilities = capabilities,
   cmd = { "@python_lsp_server@/bin/pylsp" },
   on_attach = on_attach,
@@ -155,14 +153,16 @@ lspconfig.pylsp.setup({
     },
   },
 })
+vim.lsp.enable("pylsp")
 
-lspconfig.yamlls.setup({
+vim.lsp.config("yamlls", {
   capabilities = capabilities,
   cmd = { "@yaml_language_server@/bin/yaml-language-server", "--stdio" },
   on_attach = on_attach,
 })
+vim.lsp.enable("yamlls")
 
-lspconfig.clangd.setup({
+vim.lsp.config("clangd", {
   capabilities = capabilities,
   cmd = {
     "@clang_unwrapped@/bin/clangd",
@@ -174,9 +174,10 @@ lspconfig.clangd.setup({
   },
   on_attach = on_attach,
 })
+vim.lsp.enable("clangd")
 
 -- lua lsp
-require "lspconfig".lua_ls.setup {
+vim.lsp.config("lua_ls", {
   cmd = { "@lua_language_server@/bin/lua-language-server" },
   on_attach = on_attach,
   capabilities = capabilities,
@@ -212,7 +213,8 @@ require "lspconfig".lua_ls.setup {
       },
     },
   },
-}
+})
+vim.lsp.enable("lua_ls")
 
 
 -- lspsaga.nvim
