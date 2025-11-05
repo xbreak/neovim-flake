@@ -167,6 +167,7 @@ lspconfig.clangd.setup({
   cmd = {
     "@clang_unwrapped@/bin/clangd",
     "--background-index",
+    "--header-insertion=never",
     "--log=info",
     "--resource-dir=@clang@/resource-root",
     "--query-driver=**/g++,**/gcc",
