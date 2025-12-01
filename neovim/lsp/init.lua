@@ -1,5 +1,7 @@
 local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config"
 local xbreak_config = config_home .. "/nvim-xbreak"
+local clang_format = os.getenv("CLANG_FORMAT") or "@clang_unwrapped@/bin/clang-format"
+local clangd = os.getenv("CLANGD") or "@clang_unwrapped@/bin/clangd"
 
 local ok, lspkind = pcall(require, "lspkind")
 if not ok then
@@ -13,8 +15,8 @@ vim.diagnostic.config({
 
   -- Alternatively, customize specific options
   virtual_lines = {
-   -- Only show virtual line diagnostics for the current cursor line
-   current_line = true,
+    -- Only show virtual line diagnostics for the current cursor line
+    current_line = true,
   },
 })
 
@@ -165,7 +167,7 @@ vim.lsp.enable("yamlls")
 vim.lsp.config("clangd", {
   capabilities = capabilities,
   cmd = {
-    "@clang_unwrapped@/bin/clangd",
+    clangd,
     "--background-index",
     "--header-insertion=never",
     "--log=info",
@@ -229,8 +231,9 @@ do
 end
 
 -- Set up clang-format
-
-vim.cmd([[
-  au FileType cpp setlocal
-  \ equalprg=@clang_unwrapped@/bin/clang-format\ --style=file\ --fallback-style=none
-  ]])
+do
+  vim.api.nvim_create_autocmd({ "FileType" }, {
+    pattern = "cpp",
+    command = [[setlocal equalprg=]] .. clang_format .. [[\ --style=file\ --fallback-style=none]]
+  })
+end
