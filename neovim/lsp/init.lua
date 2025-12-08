@@ -1,6 +1,7 @@
 local config_home = os.getenv("XDG_CONFIG_HOME") or os.getenv("HOME") .. "/.config"
 local xbreak_config = config_home .. "/nvim-xbreak"
 local clang_format = os.getenv("CLANG_FORMAT") or "@clang_unwrapped@/bin/clang-format"
+local clangd_format = not os.getenv("CLANG_FORMAT")
 local clangd = os.getenv("CLANGD") or "@clang_unwrapped@/bin/clangd"
 
 local ok, lspkind = pcall(require, "lspkind")
@@ -38,7 +39,6 @@ local function on_attach(_, buf)
   local map = {
     -- Note: Some keymaps are setup with lspsaga.nvim below
     K = "lua vim.lsp.buf.hover()",
-    ["="] = "lua vim.lsp.buf.format( { async = true })",
     ["[d"] = "lua vim.lsp.diagnostic.goto_prev()",
     ["]d"] = "lua vim.lsp.diagnostic.goto_next()",
     gd = "lua vim.lsp.buf.definition()",
@@ -46,6 +46,16 @@ local function on_attach(_, buf)
     ge = "lua vim.lsp.diagnostic.show_line_diagnostics()", -- obsolete after virtual lines
     -- gr = "lua vim.lsp.buf.rename()",
   }
+  if clangd_format then
+    map["="] = "lua vim.lsp.buf.format( { async = true })"
+    vim.api.nvim_buf_set_keymap(
+      buf,
+      "v",
+      "<space>f",
+      "<cmd>lua vim.lsp.buf.range_formatting()<cr>",
+      { noremap = true }
+    )
+  end
 
   for k, v in pairs(map) do
     vim.api.nvim_buf_set_keymap(
@@ -57,13 +67,6 @@ local function on_attach(_, buf)
     )
   end
 
-  vim.api.nvim_buf_set_keymap(
-    buf,
-    "v",
-    "<space>f",
-    "<cmd>lua vim.lsp.buf.range_formatting()<cr>",
-    { noremap = true }
-  )
 
   vim.api.nvim_buf_set_keymap(
     buf,
@@ -232,8 +235,18 @@ end
 
 -- Set up clang-format
 do
+  local clang_format_cmd = clang_format .. [[\ --style=file\ --fallback-style=none]]
+
   vim.api.nvim_create_autocmd({ "FileType" }, {
     pattern = "cpp",
-    command = [[setlocal equalprg=]] .. clang_format .. [[\ --style=file\ --fallback-style=none]]
+    command = [[setlocal equalprg=]] .. clang_format_cmd
   })
+  if not clangd_format then
+    vim.keymap.set(
+      "n",
+      "=%",
+      [[maHmbgggqG`bzt`a]],
+      { desc = "clang-format complete file" }
+    )
+  end
 end
