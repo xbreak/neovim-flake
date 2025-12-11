@@ -245,7 +245,7 @@ do
     vim.keymap.set(
       "n",
       "=%",
-      [[maHmbgggqG`bzt`a]],
+      [[gg=G``]],
       { desc = "clang-format complete file" }
     )
   end
