@@ -106,11 +106,9 @@
       p.tree-sitter-vimdoc
       p.tree-sitter-yaml
     ]))
-    playground
     # An alternative to this could be nvim-navic, which use winbar and lsp
     # https://github.com/SmiteshP/nvim-navic
     nvim-treesitter-context
-
   ];
 
   neovim = pkgs.neovim.override {
