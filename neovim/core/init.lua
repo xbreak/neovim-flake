@@ -564,7 +564,7 @@ local function ts_disable(_, bufnr)
   return vim.api.nvim_buf_line_count(bufnr) > 5000
 end
 
-require "nvim-treesitter.configs".setup {
+require "nvim-treesitter.config".setup {
   -- Broken by https://github.com/nvim-treesitter/nvim-treesitter/pull/3250
   -- see also https://github.com/NixOS/nixpkgs/issues/189838
   -- one of "all", "language", or a list of languages
