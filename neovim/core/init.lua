@@ -191,8 +191,13 @@ vim_cmd([[cnoreabbrev Bd Bdelete]])
 vim_cmd([[cnoreabbrev Bd! Bdelete!]])
 
 -- Toggle window maximization
+-- Replace both <c-w>o and <c-w><c-o> to disable :only default commands
+-- nowait is apparently also needed for some reason.
+
+vim.keymap.set("n", "<c-w><C-O>", [[:ToggleOnly<cr>]],
+               { nowait = true, silent = true, desc = "Toggle Window Maximization"})
 vim.keymap.set("n", "<c-w>o", [[:ToggleOnly<cr>]],
-               { silent = true, desc = "Toggle Window Maximization" })
+               { nowait = true, silent = true, desc = "Toggle Window Maximization"})
 
 -- Toggle normal/terminal mode with <C-]> for terminal buffers
 function _G.set_terminal_keymaps()
