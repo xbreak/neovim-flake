@@ -267,6 +267,7 @@ do
   vim.keymap.set("n", "<leader>fr", fzf.resume, { desc = "Fzf Resume" })
   vim.keymap.set("n", "<leader>fg", fzf.live_grep_glob, { desc = "Fzf Grep" })
   vim.keymap.set("n", "<leader>fd", fzf.lsp_finder, { desc = "Fzf LSP" })
+  vim.keymap.set("n", "<leader>fe", fzf.lsp_document_diagnostics, { desc = "Fzf LSP Diagnostics" })
 
   -- Use fzf-lua for selections
   fzf.register_ui_select()
