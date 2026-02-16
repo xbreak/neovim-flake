@@ -35,6 +35,10 @@
       url = "github:xbreak/cmp-nvim-lsp-document-symbol";
       flake = false;
     };
+    nordic-nvim = {
+      url = "github:AlexvZyl/nordic.nvim";
+      flake = false;
+    };
   };
   outputs = {
     self,
@@ -50,6 +54,7 @@
       "nvim-possession"
       "cmp-nvim-lsp-document-symbol"
       "solarized-nvim"
+      "nordic-nvim"
     ];
     system = "x86_64-linux";
     pkgs = import nixpkgs-unstable {

@@ -77,7 +77,8 @@
     nvim-notify
     solarized-nvim
     nightfox-nvim
-    nord-vim
+    nord-nvim
+    nordic-nvim
     nvim-web-devicons
     gruvbox-nvim
 
@@ -109,6 +110,7 @@
     # An alternative to this could be nvim-navic, which use winbar and lsp
     # https://github.com/SmiteshP/nvim-navic
     nvim-treesitter-context
+    nvim-treesitter-textobjects
   ];
 
   neovim = pkgs.neovim.override {

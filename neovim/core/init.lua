@@ -8,8 +8,42 @@ vim.o.timeoutlen = 500 -- Shorter to enter operator-pending mode faster
 
 vim.opt.matchpairs:append "<:>"
 
--- Disabled for now as it's a bit too experimental
--- vim.go.cmdheight = 0
+-- Hide command line
+vim.go.cmdheight = 0
+
+-- Solarized palette for terminal to get accurate
+-- 16 ANSI colors for shell prompt (which use solarized)
+
+local solarized_term_palette = {
+  base0 = '#839496',
+  base00 = '#657B83',
+  base01 = '#586E75',
+  base02 = '#073642',
+  base03 = '#002B36',
+  base04 = '#002731',
+  base1 = '#93A1A1',
+  base2 = '#eee8d5',
+  base3 = '#fdf6e3',
+  base4 = '#fbf3db',
+  blue = '#268BD2',
+  cyan = '#2AA198',
+  green = '#859900',
+  magenta = '#D33682',
+  mix_blue = '#0B4764',
+  mix_cyan = '#0C4E53',
+  mix_green = '#274C25',
+  mix_magenta = '#3F2E4C',
+  mix_orange = '#3C342C',
+  mix_red = '#422D33',
+  mix_violet = '#204060',
+  mix_yellow = '#364725',
+  mix_base1 = '#2C4E56',
+  mix_base01 = '#CCCDC2',
+  orange = '#CB4B16',
+  red = '#DC322F',
+  violet = '#6C71C4',
+  yellow = '#B58900',
+}
 
 --Fixup the terminal colors not set by solarized theme
 --@param colors solarized.palette
@@ -57,9 +91,20 @@ local fixup_term_colors = function(colors, color)
   g.terminal_color_15 = colors.base3
 end
 
+local hl_link = function(from, to)
+  -- To get the equivalent of `hi! link <from> <to>` we have to clear <from> first
+  -- https://github.com/neovim/neovim/issues/20323
+  vim.api.nvim_set_hl(0, from, {})
+  vim.api.nvim_set_hl(0, from, { link = to })
+end
+
 --
 -- Plugin configuration
 --
+
+-- Nord
+require("nord").set()
+require("nordic").load()
 
 -- Solarized
 require('solarized').setup({
@@ -90,8 +135,6 @@ require('solarized').setup({
       Visual = { fg = colors.base3, bg = colors.base1 },
       Search = { fg = colors.base3, bg = colors.red },
       IncSearch = { fg = colors.base3, bg = colors.yellow },
-      LineNr = { fg = colors.base1, bg = colors.base2 },
-      CursorLineNr = { fg = colors.base1, bg = colors.base3 },
       WinSeparator = { link = "Normal" },
 
       -- treesitter
@@ -119,6 +162,17 @@ require('solarized').setup({
       NvimTreeGitFileDirtyHL = { fg = colors.yellow },
       NvimTreeGitDirtyIcon = {  fg = colors.yellow },
     }
+
+    -- Make cursorline noticable
+    -- CursorLineNr is by default same as bg with red cursor fg
+    --if vim.o.background == "light" then
+    --  groups.LineNr = { fg = colors.base1, bg = colors.base2 }
+    --  groups.CursorLineNr = { fg = colors.base1, bg = colors.base3 }
+    --else
+    --  groups.LineNr = { fg = colors.base01, bg = colors.base02 }
+    --  groups.CursorLineNr = { fg = colors.base01, bg = colors.base03 }
+    --end
+
     return groups
   end,
   on_colors = function(colors, color)
@@ -509,31 +563,25 @@ do
   -- schedule it (maybe notify itself sets up things lazily).
   vim.schedule(function()
     -- Fix up default highlight
-    local link = function(from, to)
-      -- To get the equivalent of `hi! link <from> <to>` we have to clear <from> first
-      -- https://github.com/neovim/neovim/issues/20323
-      vim.api.nvim_set_hl(0, from, {})
-      vim.api.nvim_set_hl(0, from, { link = to })
-    end
-    link("NotifyERRORBorder", "DiagnosticError")
-    link("NotifyERRORIcon", "DiagnosticError")
-    link("NotifyERRORTitle", "DiagnosticError")
+    hl_link("NotifyERRORBorder", "DiagnosticError")
+    hl_link("NotifyERRORIcon", "DiagnosticError")
+    hl_link("NotifyERRORTitle", "DiagnosticError")
 
-    link("NotifyWARNBorder", "DiagnosticWarn")
-    link("NotifyWARNIcon", "DiagnosticWarn")
-    link("NotifyWARNTitle", "DiagnosticWarn")
+    hl_link("NotifyWARNBorder", "DiagnosticWarn")
+    hl_link("NotifyWARNIcon", "DiagnosticWarn")
+    hl_link("NotifyWARNTitle", "DiagnosticWarn")
 
-    link("NotifyINFOBorder", "DiagnosticInfo")
-    link("NotifyINFOIcon", "DiagnosticInfo")
-    link("NotifyINFOTitle", "DiagnosticInfo")
+    hl_link("NotifyINFOBorder", "DiagnosticInfo")
+    hl_link("NotifyINFOIcon", "DiagnosticInfo")
+    hl_link("NotifyINFOTitle", "DiagnosticInfo")
 
-    link("NotifyDEBUGBorder", "DiagnosticHint")
-    link("NotifyDEBUGIcon", "DiagnosticHint")
-    link("NotifyDEBUGTitle", "DiagnosticHint")
+    hl_link("NotifyDEBUGBorder", "DiagnosticHint")
+    hl_link("NotifyDEBUGIcon", "DiagnosticHint")
+    hl_link("NotifyDEBUGTitle", "DiagnosticHint")
 
-    link("NotifyTRACEBorder", "Comment")
-    link("NotifyTRACEIcon", "Comment")
-    link("NotifyTRACETitle", "Comment")
+    hl_link("NotifyTRACEBorder", "Comment")
+    hl_link("NotifyTRACEIcon", "Comment")
+    hl_link("NotifyTRACETitle", "Comment")
   end)
 end
 
@@ -834,5 +882,150 @@ do
                 { desc = "Toggle Current/Last Terminal" })
 end
 
+
+local set_term_light = function()
+  local g = vim.g
+  local colors = solarized_term_palette
+  -- black
+  g.terminal_color_0 = colors.base02
+  -- bright black
+  g.terminal_color_8 = colors.base03
+
+  -- red
+  g.terminal_color_1 = colors.red
+  -- bright red
+  g.terminal_color_9 = colors.orange
+
+  -- green
+  g.terminal_color_2 = colors.green
+  -- bright green
+  g.terminal_color_10 = colors.base01
+
+  -- yellow
+  g.terminal_color_3 = colors.yellow
+  -- bright yellow
+  g.terminal_color_11 = colors.base00
+
+  -- blue
+  g.terminal_color_4 = colors.blue
+  -- bright blue
+  g.terminal_color_12 = colors.base0
+
+  -- magenta
+  g.terminal_color_5 = colors.magenta
+  -- bright magenta
+  g.terminal_color_13 = colors.violet
+
+  -- cyan
+  g.terminal_color_6 = colors.cyan
+  -- bright cyan
+  g.terminal_color_14 = colors.base1
+
+  -- white
+  g.terminal_color_7 = colors.base2
+  -- bright white
+  g.terminal_color_15 = colors.base3
+end
+
+local set_term_dark = function()
+  local g = vim.g
+  local colors = solarized_term_palette
+  -- black
+  g.terminal_color_0 = colors.base2
+  -- bright black
+  g.terminal_color_8 = colors.base3
+
+  -- red
+  g.terminal_color_1 = colors.red
+  -- bright red
+  g.terminal_color_9 = colors.orange
+
+  -- green
+  g.terminal_color_2 = colors.green
+  -- bright green
+  g.terminal_color_10 = colors.base1
+
+  -- yellow
+  g.terminal_color_3 = colors.yellow
+  -- bright yellow
+  g.terminal_color_11 = colors.base0
+
+  -- blue
+  g.terminal_color_4 = colors.blue
+  -- bright blue
+  g.terminal_color_12 = colors.base01
+
+  -- magenta
+  g.terminal_color_5 = colors.magenta
+  -- bright magenta
+  g.terminal_color_13 = colors.violet
+
+  -- cyan
+  g.terminal_color_6 = colors.cyan
+  -- bright cyan
+  g.terminal_color_14 = colors.base01
+
+  -- white
+  g.terminal_color_7 = colors.base02
+  -- bright white
+  g.terminal_color_15 = colors.base03
+end
+
+-- Colorscheme switch-fixups
+local on_colorscheme_fns = {
+  ["solarized"] = function()
+    require("lualine").setup{options={theme="solarized"}}
+    -- clear annoying solarized cursorline highlight
+    vim.api.nvim_set_hl(0, "CursorLine", {})
+    hl_link("WinBar", "BufferCurrent" )
+    hl_link("CursorLineNr", "FoldColumn" )
+  end,
+  ["solarized.light"] = function()
+    vim.fn.setenv("BAT_THEME", "Solarized (light)")
+  end,
+  ["solarized.dark"] = function()
+    vim.fn.setenv("BAT_THEME", "Solarized (dark)")
+  end,
+  ["nord"] = function()
+    vim.fn.setenv("BAT_THEME", "Nord")
+    -- Nord is old and does not know WinBar -> link to buffer equivalent
+    hl_link("WinBar", "BufferCurrent" )
+    hl_link("WinBarNC", "BufferInactive" )
+    require"lualine".setup{options={theme="nord"}}
+  end,
+  ["*.light"] = function()
+    set_term_light()
+  end,
+  ["*.dark"] = function()
+    set_term_dark()
+  end,
+  ["nordic"] = function()
+    vim.fn.setenv("BAT_THEME", "Nord")
+    require("lualine").setup{options={theme="nordic"}}
+  end,
+  ["gruvbox.light"] = function()
+    vim.fn.setenv("BAT_THEME", "gruvbox-light")
+  end,
+  ["gruvbox.dark"] = function()
+    vim.fn.setenv("BAT_THEME", "gruvbox-dark")
+  end,
+}
+function _G.on_colorscheme()
+  local bg = vim.o.background
+  local colorscheme = vim.g.colors_name or 'default'
+  local call = function(key)
+    local fn = on_colorscheme_fns[key]
+    if fn ~= nil then
+      fn()
+    end
+  end
+
+  call(colorscheme)
+  call(colorscheme .. "." .. bg)
+  call("*." .. bg)
+end
+
+vim.cmd([[autocmd! ColorScheme * lua on_colorscheme()]])
+vim.cmd([[autocmd! OptionSet background lua on_colorscheme()]])
 -- Set colorscheme to solarized
 vim.cmd [[colorscheme solarized]]

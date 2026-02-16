@@ -91,11 +91,11 @@ autocmd TermOpen * setlocal nonumber norelativenumber
 
 " Highlight line in the gutter but not the full line
 " Update TermCursor to use solarized green for cursor in "insert" mode
-autocmd ColorScheme *
-      \ highlight CursorLineNr cterm=reverse gui=reverse |
-      \ highlight clear TermCursor |
-      \ highlight! TermCursor guibg=#859900 |
-      \ highlight clear CursorLine
+"autocmd ColorScheme *
+"      \ highlight CursorLineNr cterm=reverse gui=reverse |
+"      \ highlight clear TermCursor |
+"      \ highlight! TermCursor guibg=#859900 |
+"      \ highlight clear CursorLine
 
 " Fix up difficult to see hop motion indicators
 autocmd ColorScheme *
@@ -103,16 +103,6 @@ autocmd ColorScheme *
       \ highlight! link HopNextKey1 DiffText |
       \ highlight! link HopNextKey2 DiffChange
 
-" Fix up bat themes based on current colorscheme
-autocmd Colorscheme solarized
-      \ let $BAT_THEME = (&background == 'dark' ? 'Solarized (dark)' : 'Solarized (light)')
-
-
-autocmd Colorscheme nord
-      \ let $BAT_THEME = 'Nord'
-
-autocmd Colorscheme gruvbox
-      \ let $BAT_THEME = (&background == 'dark' ? 'gruvbox-dark' : 'gruvbox-light')
 
 onoremap <silent>ii :<C-u>call text#obj_indent(v:true)<CR>
 onoremap <silent>ai :<C-u>call text#obj_indent(v:false)<CR>

@@ -77,7 +77,8 @@ Appearance
 
 - lualine-nvim
 - solarized.nvim (nvim-solarized-lua is not maintained)
-- nord-vim
+- nord.nvim
+- nordic.nvim
 - nvim-web-devicons
 - gruvbox-nvim
 
