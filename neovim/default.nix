@@ -16,10 +16,10 @@
       substitutions);
 
   # My own config
-  dotplug = pkgs.vimUtils.buildVimPlugin {
-    pname = "dotplug";
+  xbreak-core = pkgs.vimUtils.buildVimPlugin {
+    pname = "xbreak-core";
     version = "latest";
-    src = ./dotplug;
+    src = ./xbreak-core;
   };
 
   corePlugins = let
@@ -28,7 +28,7 @@
   with pkgs.vimPlugins;
   with pkgs.neovimPlugins; [
     # My config as plugin
-    dotplug
+    xbreak-core
 
     # Navigation
     fzf-lua
