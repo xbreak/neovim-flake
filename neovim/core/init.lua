@@ -319,7 +319,8 @@ do
   -- Less common use <leader>f* mapping
   vim.keymap.set("n", "<leader>fb", fzf.blines, { desc = "Fzf Buffer Lines" })
   vim.keymap.set("n", "<leader>fr", fzf.resume, { desc = "Fzf Resume" })
-  vim.keymap.set("n", "<leader>fg", fzf.live_grep_glob, { desc = "Fzf Grep" })
+  vim.keymap.set("n", "<leader>fg", fzf.live_grep_glob, { desc = "Fzf Grep globally" })
+  vim.keymap.set("n", "<leader>fl", fzf.grep_curbuf, { desc = "Fzf Grep locally" })
   vim.keymap.set("n", "<leader>fd", fzf.lsp_finder, { desc = "Fzf LSP" })
   vim.keymap.set("n", "<leader>fe", fzf.lsp_document_diagnostics, { desc = "Fzf LSP Diagnostics" })
 
